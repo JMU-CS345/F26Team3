@@ -6,40 +6,40 @@
 
 ## 1. Team and Roles
 
-### Team Number
+### Team Number: 3
 
-### Team Name
+### Team Name: Smissquad
 
 _
 
 ### Members
 
-| Name | GitHub username | Preferred contact | Usual availability |
-|------|-----------------|-------------------|--------------------|
-|      |                 |                   |                    |
-|      |                 |                   |                    |
-|      |                 |                   |                    |
-|      |                 |                   |                    |
+| Name    | GitHub username | Preferred contact | Usual availability |
+|---------|-----------------|-------------------|--------------------|
+| Anna    | AnnaBBurg       |                   |  Evenings                  |
+| Sam     | sfingz52-lgtm   |                   |  Mornings                  |
+| Nic     | nmcicchi        |                   |  Evenings                  |
+| Brandon | brandonsalandy  |                   |  mornings                  |
 
 ### Scrum Master
 
-**Sprint 1 Scrum Master:** _
+**Sprint 1 Scrum Master:** Anna!
 
 **Does the role rotate?** *(e.g., rotates each sprint in the order listed above; or one person for the whole project)*
-
+No
 _
 
 ### Product Owner
 
 *Choose one team member who will interact with the instructor (stakeholder) to clarify and prioritize stories, and to collect new ones.*
-
+Sam
 _
 
 ### Other Responsibilities
 
-Who is responsible for maintaining the project board / backlog in good order? *(Scrum Master?)*
+Who is responsible for maintaining the project board / backlog in good order? *(Scrum Master?)* Anna
 
-Who is responsible for deploying the main branch to production to update GitHub pages?
+Who is responsible for deploying the main branch to production to update GitHub pages? 
 
 ### Decision Making
 
