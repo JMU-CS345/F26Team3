@@ -77,19 +77,19 @@ _
 
 *A backlog item may be pulled into a sprint only when:*
 
-- [ ] it is written as a user story
-- [ ] it has acceptance criteria
-- [ ] it has an estimate
+- [x ] it is written as a user story
+- [ x] it has acceptance criteria
+- [x ] it has an estimate
 
 ### Definition of Done
 
 *An item is done only when:*
 
-- [ ] code is reviewed and approved by at least one teammate
-- [ ] all tests pass in CI
-- [ ] merged to `main`
-- [ ] works in the deployed build
-- [ ] the issue is closed
+- [x ] code is reviewed and approved by at least one teammate
+- [x ] all tests pass in CI
+- [ x] merged to `main`
+- [ x] works in the deployed build
+- [x ] the issue is closed
 - [ ]
 
 ### Estimation
@@ -97,7 +97,7 @@ _
 **Method:** *(story points, t-shirt sizes, hours)*
 story points - measures relative size by numbers - effort, complexity, uncertainty
 **Scale:** *(e.g., 1, 2, 3, 5, 8, 13)*
-
+yeah
 _
 
 ### Backlog and Board
@@ -114,9 +114,11 @@ _
 
 ### Primary Channel
 
-**Channel:** *(Discord, Slack, GroupMe, ...)* Text
+**Channel:** *(Discord, Slack, GroupMe, ...)* 
+Text
 
-**Expected response time:** *(e.g., within 12 hours on weekdays)* within 7 work hours of text
+**Expected response time:** *(e.g., within 12 hours on weekdays)* 
+within 7 work hours of text
 
 ### What Goes Where
 
@@ -169,27 +171,27 @@ _
 **Maximum size:** *(e.g., aim for under 300 changed lines)* 
 300
 **Description template:** *(e.g., What / Why / How to test / Screenshot)* 
-
+No screenshot needed unless art, just explain what it is, why you need to change it and how to test it
 **Linking issues:** *(e.g., every PR includes `Closes #N`)*
-
+'closes issue number'
 _
 
 ### Code Review
 
 **Review turnaround:** *(e.g., within 24 hours of being requested)*
-
+Within 24 hours of being requested.
 **Who reviews what:** *(e.g., any teammate; or a rotating assignment)*
-
+Nic reviews Anna, Anna reviews Sam, Sam reviews Brandon, Brandon reviews Nic
 _
 
 ### Merging
 
 **Merge style:** *(merge commit, squash and merge, or rebase and merge)*
-
+Squash and merge -> makes commits into one commit
 **Who merges:** *(the author after approval, or the reviewer)*
-
+Reviewer 
 **After merge:** *(e.g., delete the branch)*
-
+Delete the branch
 _
 
 ---
@@ -200,24 +202,24 @@ _
 
 | Kind | Convention | Example |
 |------|------------|---------|
-| Variables and functions | | |
-| Classes | | |
-| Constants | | |
-| Files | | |
-| Test files | | |
+| Variables and functions | Camel case | annaIsCool |
+| Classes | Uppercase camel case | ClassName |
+| Constants | All caps with underscores|MAX_NUMBER |
+| Files | Dash seperated | my-file |
+| Test files | name of class + test | ClassNameTest |
 
 ### Formatting
 
 **Indentation:** *(2 spaces, 4 spaces, tabs)*
-
+2 space tab
 **Semicolons:** *(always / never)*
-
+ALWAYS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 **Quotes:** *(single / double)*
-
+Double for Strings, single for Chars
 **Maximum line length:** _
-
+100 characters
 **Tools:** *(e.g., Prettier and ESLint, with config files committed to the repo)*
-
+Prettier and ESLint
 _
 
 ### Project Structure
@@ -236,23 +238,23 @@ spec/
 ### Architecture Rules
 
 *(e.g., game logic never calls p5 drawing functions directly, so it can be unit tested)*
-
+Keep model view and controller separate and small
 -
 -
 
 ### Comments and Documentation
 
 *(When are comments or JSDoc required?)*
-
+Comments are required at the top of functions, comments throughout are requested 
 _
 
 ### Assets
 
 **File naming:** *(e.g., all lowercase, hyphens, no spaces)*
-
+all lowercase with dashes 
 **Licensing and attribution:** *(Where do we record the source and license of art, sound, and fonts we did not make?)*
 
-_
+_Licensing to Sam
 
 ---
 
@@ -260,17 +262,17 @@ _
 
 **Test framework:** Jasmine
 
-**Where tests live:** _
+**Where tests live:** Next to the file they test
 
 **What must have tests:** *(e.g., all model code; every bug fix gets a test that reproduces it; combat and puzzle rules)*
 
-_
+_All functions and every bug
 
-**Coverage expectations:** 90+%
+**Coverage expectations:** 95+%
 
-**Continuous integration:** *(What does GitHub Actions run on each PR?)*
+**Continuous integration:** *(What does GitHub Actions run on each PR?)* 
 
-_
+_make sure the game doesn't crash, make sure written tests pass
 
 **Rule for failing CI:** *(e.g., nothing merges while CI is red)*
 
@@ -278,7 +280,7 @@ _
 
 **Manual playtesting:** *(Who plays the build before each sprint review, and how are bugs reported?)*
 
-_
+_Everybody has game time, at least two people on it before each review 
 
 ---
 
@@ -288,27 +290,27 @@ _
 
 **What triggers a deploy:** *(e.g., a release PR from `main` into `production`, opened by the Scrum Master after each sprint review)*
 
-**Who checks the deployed build, and when:** _
+**Who checks the deployed build, and when:** After the pull request
 
 ---
 
 ## 8. AI Tool Usage
 
-**Allowed tools:** _
+**Allowed tools:** Any coding AI
 
-**Allowed uses:** *(e.g., code generation, tests, documentation, review)*
+**Allowed uses:** *(e.g., code generation, tests, documentation, review)* Testing and documentation
 
 _
 
-**Not allowed:** _
+**Not allowed:** Image generation, music generation
 
 **Disclosure:** *(e.g., note AI assistance in the PR description)*
-
+Yes
 _
 
 **Responsibility:** *(e.g., whoever submits AI-generated code must understand it and is accountable for it)*
 
-_
+Yeah
 
 ---
 
@@ -316,35 +318,34 @@ _
 
 ### Expected Effort
 
-*(Hours per person per week.)*
+3 hours outside of class per person per week
 
 _
 
 ### Fair Contribution
 
 *(What counts as contributing, and how is it tracked? e.g., PRs merged, reviews done, story points completed.)*
-
+Reviews done
 _
 
 ### Conflict Resolution
 
 *(What steps do we follow when there is a disagreement or a problem with a teammate?)*
 
-1. *(e.g., talk to the person directly)*
-2. *(e.g., raise it at the retrospective)*
-3. *(e.g., Scrum Master mediates)*
-4. *(e.g., escalate to the instructor)*
+1. Talk to the person directly
+2. Scrum master mediates
+3. Escalate to instructor
 
 ### Missed Commitments
 
 *(What happens when a member repeatedly misses commitments?)*
-
+Talk to the instructor 
 _
 
 ### Amending This Constitution
 
 *(How can this document be changed? e.g., proposed by PR, approved by team vote at a retrospective.)*
-
+Group vote on changing it
 _
 
 ---
@@ -355,7 +356,7 @@ _
 
 | GitHub name | Signature (type your name) | Date |
 |------|----------------------------|------|
-|      |                            |      |
+| AnnaBburg      | Anna Brandenburg                           | 10/28     |
 |      |                            |      |
 |      |                            |      |
 |      |                            |      |
