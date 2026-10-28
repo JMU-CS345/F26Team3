@@ -39,12 +39,12 @@ _
 
 Who is responsible for maintaining the project board / backlog in good order? *(Scrum Master?)* Anna
 
-Who is responsible for deploying the main branch to production to update GitHub pages? 
+Who is responsible for deploying the main branch to production to update GitHub pages? Nic
 
 ### Decision Making
 
 *(How do we decide things: consensus, majority vote, Scrum Master decides? What happens if we are deadlocked?)*
-
+Majority vote, if there's a tie, Anna chooses
 _
 
 ---
@@ -95,7 +95,7 @@ _
 ### Estimation
 
 **Method:** *(story points, t-shirt sizes, hours)*
-
+story points - measures relative size by numbers - effort, complexity, uncertainty
 **Scale:** *(e.g., 1, 2, 3, 5, 8, 13)*
 
 _
@@ -103,9 +103,9 @@ _
 ### Backlog and Board
 
 **Where the backlog lives:** *(e.g., GitHub Projects board, link here)*
-
+In the documents directory in GitHub
 **Board columns:** *(e.g., To Do → In Progress → In Review → Done)*
-
+To Do → In Progress → In Review → Done
 _
 
 ---
@@ -114,26 +114,26 @@ _
 
 ### Primary Channel
 
-**Channel:** *(Discord, Slack, GroupMe, ...)*
+**Channel:** *(Discord, Slack, GroupMe, ...)* Text
 
-**Expected response time:** *(e.g., within 12 hours on weekdays)*
+**Expected response time:** *(e.g., within 12 hours on weekdays)* within 7 work hours of text
 
 ### What Goes Where
 
 *(What is discussed in the chat channel vs. in GitHub issues vs. in PR comments?)*
-
+Chat channel is for clarifying, issues are for adding features, PR comments for when you added new things
 _
 
 ### Reporting Blockers or Falling Behind
 
 *(How and how early does a member tell the team they are stuck or behind?)*
-
+Tell them asap on the text chain
 _
 
 ### Absences
 
 *(How much notice is required? How is the absent member's work covered?)*
-
+A day's notice, absent member's work is divided evenly
 _
 
 ---
@@ -142,33 +142,33 @@ _
 
 ### Branch Naming
 
-**Format:** *(e.g., `type/issue-short-description`)*
+**Format:** *(e.g., `type/issue-short-description`)* 'type/issue-discription'
 
-**Allowed types:** *(e.g., `feature`, `fix`, `docs`, `refactor`, `test`, `chore`)*
+**Allowed types:** *(e.g., `feature`, `fix`, `docs`, `refactor`, `test`, `chore`)* `feature`, `fix`, `docs`, `refactor`, `test`
 
 **Examples:**
-
+'fix/game-doesn't-crash-when-fireball-cast'
 -
 -
 
 ### Branch Protection on `main`
 
-- [ ] No direct pushes to `main`
-- [ ] Required approvals before merge: _
-- [ ] CI must pass before merge
-- [ ] Same protection on `production`
+- [x] No direct pushes to `main`
+- [x] Required approvals before merge: _ Nic
+- [X] CI must pass before merge
+- [X] Same protection on `production`
 
 ### Commit Messages
 
 *(Format and style, e.g., imperative mood: "Add rune puzzle validation". Do we follow Conventional Commits?)*
-
+No details or questions, just saying what you change
 _
 
 ### Pull Requests
 
-**Maximum size:** *(e.g., aim for under 300 changed lines)*
-
-**Description template:** *(e.g., What / Why / How to test / Screenshot)*
+**Maximum size:** *(e.g., aim for under 300 changed lines)* 
+300
+**Description template:** *(e.g., What / Why / How to test / Screenshot)* 
 
 **Linking issues:** *(e.g., every PR includes `Closes #N`)*
 
