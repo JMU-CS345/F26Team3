@@ -358,5 +358,5 @@ _
 |------|----------------------------|------|
 | AnnaBburg      | Anna Brandenburg                           | 10/28     |
 | sfingz52-lgtm     | Sam Wandler                           | 10/28     |
-|      |                            |      |
+|  nmcicchi    |   Nicolas Cicchi                         | 10/28     |
 |      |                            |      |
