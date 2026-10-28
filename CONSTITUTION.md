@@ -357,6 +357,6 @@ _
 | GitHub name | Signature (type your name) | Date |
 |------|----------------------------|------|
 | AnnaBburg      | Anna Brandenburg                           | 10/28     |
-|      |                            |      |
+| sfingz52-lgtm     | Sam Wandler                           | 10/28     |
 |      |                            |      |
 |      |                            |      |
