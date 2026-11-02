@@ -6,13 +6,13 @@
 
 ## 1. Meeting Details
 
-**Date:** _
+**Date:** 11/2/26
 
-**Scrum Master:** _
+**Scrum Master:** Anna
 
-**Attendees:** _
+**Attendees:** Nic, Sam, Brandon
 
-**Absent:** _
+**Absent:**  N/A
 
 ---
 
@@ -20,25 +20,25 @@
 
 *One or two sentences describing a playable outcome, not a list of tickets. e.g., "A player can create a character and enter the first dungeon."*
 
-_
+Character moving on screen which has a background. 
 
 ---
 
 ## 3. Capacity and Velocity
 
-**Sprint dates:** _ to _
+**Sprint dates:** Nov 2 to Nov 10
 
-**Velocity last sprint (points completed):** _ *(Sprint 1: write "n/a")*
+**Velocity last sprint (points completed):** n/a
 
-**Average velocity so far:** _
+**Average velocity so far:** n/a
 
-**Known absences or reduced availability this sprint:** _
+**Known absences or reduced availability this sprint:** n/a
 
-**Points committed this sprint:** _
+**Points committed this sprint:** 5
 
 **Why this commitment is realistic:** *(Compare it to your velocity and capacity. If you are committing more than last sprint's velocity, explain why.)*
 
-_
+Because our goal is pretty simple, we know how to do it, we just need to do the steps. 
 
 ---
 
@@ -48,15 +48,15 @@ _
 
 | Issue # | User story | Estimate | Owner | Ready? |
 |---------|------------|----------|-------|--------|
-|         |            |          |       | [ ]    |
-|         |            |          |       | [ ]    |
-|         |            |          |       | [ ]    |
-|         |            |          |       | [ ]    |
+|  25   |   As a user, I want to see a character that I play as         |   2       |  Sam     | [ ]    |
+|  8       |  As a user, I want to be able to see much of the world in front of me, so I know where I am going          |  2        |   Anna    | [ ]    |
+|  14       |  As a user, I want to move the character with the keyboard, so that I can explore the dungeon          |    2      |   Nic    | [ ]    |
+| 26        |   As a user, I want to be able to see my health bar, so I know how much health I have left         |     2     |  Brandon     | [ ]    |
 |         |            |          |       | [ ]    |
 
-**Total points:** _
+**Total points:** 8
 
-**Notes:** _
+**Notes:** All of these tasks can be completed individually. 
 
 ---
 
@@ -64,19 +64,31 @@ _
 
 *Break each story into tasks. Include tasks for writing tests and reviewing PRs, not only coding.*
 
-### Issue #_: *(story title)*
+### Issue #25: Drawing a Character
 
-- [ ]
-- [ ]
-- [ ]
-
-### Issue #_: *(story title)*
-
-- [ ]
-- [ ]
+- [ ] Draw the character on ipad
+- [ ] Upload image to the repository src -> assests -> character
 - [ ]
 
-*(Repeat for each committed story.)*
+### Issue #8: World Building
+
+- [ ] Draw the background image
+- [ ] Upload image into repository src -> assets -> environment
+- [ ] Display background on the p5.js
+
+### Issue #14: Keyboard Based Movement
+
+- [ ] Draw a png on the screen
+- [ ] Read keyboard inputs for movement
+- [ ] Make png move
+- [ ] Make character move once Sam uploads image
+
+### Issue #26: Health Bar
+
+- [ ] Make red rectangle with p5
+- [ ] Give bar a value - "health points"
+- [ ] Make rectangle shrink based on health points
+
 
 ---
 
@@ -84,14 +96,12 @@ _
 
 | Member | Stories owned | Points |
 |--------|---------------|--------|
-|        |               |        |
-|        |               |        |
-|        |               |        |
-|        |               |        |
+|   Anna     |       8       |   2     |
+|   Nic     |        14       |   2     |
+|    Sam    |        25       |   2     |
+|  Brandon      |          26     |   2     |
 
 *If the work is not balanced, explain why:*
-
-_
 
 ---
 
@@ -99,7 +109,7 @@ _
 
 *Did you split any stories that were too large for one sprint, or move stories back to the backlog? List them and say why.*
 
-_
+No, each story is small
 
 ---
 
@@ -107,10 +117,7 @@ _
 
 *Which action items from last sprint's retrospective are part of this sprint's plan, and how? (Sprint 1: write "n/a")*
 
-| Action item | How it shows up in this sprint |
-|-------------|--------------------------------|
-|             |                                |
-|             |                                |
+N/A
 
 ---
 
@@ -118,15 +125,17 @@ _
 
 *What might stop the team from meeting the sprint goal? Which stories depend on others being finished first?*
 
-_
+- Lack of motivation and lack of knowledge of GIT and how it works
+
+- Nic's story depends on Sam's story being finished first
 
 ---
 
 ## 10. Checklist
 
-- [ ] Sprint goal written
-- [ ] Every committed story meets the Definition of Ready
-- [ ] Every story has an owner
-- [ ] Board updated: committed stories in the sprint, tasks created
-- [ ] Commitment compared to velocity
-- [ ] Report committed to `scrum/planning/` via pull request
+- [ X ] Sprint goal written
+- [ X ] Every committed story meets the Definition of Ready
+- [ X ] Every story has an owner
+- [ X ] Board updated: committed stories in the sprint, tasks created
+- [ X ] Commitment compared to velocity
+- [ X ] Report committed to `scrum/planning/` via pull request
