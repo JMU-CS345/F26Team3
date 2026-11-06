@@ -8,4 +8,8 @@ class Character{
         }
         Character.#instance = this;
     }
+
+    function drawCharacter() {
+
+    }
 }
