@@ -6,13 +6,13 @@ async function setup() {
     backgroundImage = await loadImage('GrassyPlain.png');
 }
 
-function draw() { 
-  // Image for the background of a grassy plain
-    if (backgroundImage) {
-        for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-            image(backgroundImage, col * 133, row * 133, 133, 133);
+function draw() {
+  if (backgroundImage) {
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        image(backgroundImage, col * 133, row * 133, 133, 133);
+      }
     }
-        }
-    }
+  }
+  drawHealthBar(playerHealth);
 }
