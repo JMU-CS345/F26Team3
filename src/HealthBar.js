@@ -30,22 +30,8 @@ class HealthBar {
 
 let playerHealth = new HealthBar(100, 50, 50, 200, 20);
 
-function setup() {
-  createCanvas(400, 400);
-}
-
-function draw() {
-  background(220);
-  
-  drawHealthBar(playerHealth);
-
-  fill(0);
-  noStroke();
-  textSize(12);
-  text("Press 'D' to take damage, 'H' to heal", 50, 95);
-}
-
 function drawHealthBar(hb) {
+  background(220);
   noStroke();
   fill(210, 210, 210);
   rect(hb.x, hb.y, hb.width, hb.height);
