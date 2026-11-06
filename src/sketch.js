@@ -1,8 +1,9 @@
 let backgroundImage;
+let playerHealth;
 
 async function setup() {
     createCanvas(400, 400);
-
+    playerHealth = new HealthBar(100, 50, 50, 200, 20);
     backgroundImage = await loadImage('GrassyPlain.png');
 }
 
@@ -14,5 +15,5 @@ function draw() {
       }
     }
   }
-  drawHealthBar(playerHealth);
+  playerHealth.draw();
 }
