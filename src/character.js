@@ -1,40 +1,37 @@
-class Character{
-    // singleton character so you can only create one (?)
-    // character needs to have an image, how to p5
+class character {
     static #instance = null;
-    let x y speed;
-    let w = h = 50;
-    let img = await loadImage("assets/tmp/SmiskiTEMP.jpg");
-    constructor(startX, startY, speed) {
-        if (Character.instance) {
+
+    constructor(startX, startY, speed, tempImg) {
+        // Singleton check
+        if (character.#instance) {
             return Character.#instance;
         }
-        Character.#instance = this;
-        x = startX;
-        y = startY;
+        character.#instance = this;
+
+        this.x = startX;
+        this.y = startY;
         this.speed = speed;
+        this.img = tempImg;
+        this.w = 50;
+        this.h = 50;
     }
 
-    function move(pressed) {
-        if (pressed == 'ArrowLeft') {
-            x -= speed;
-            drawCharacter(x, y);
+    move(pressed) {
+        if (pressed === 'ArrowLeft') {
+            this.x -= this.speed;
         }
-        if (pressed == 'ArrowRight') {
-            x+= speed;
-            drawCharacter(x, y);
+        if (pressed === 'ArrowRight') {
+            this.x += this.speed;
         }
-        if (pressed == 'ArrowUp') {
-            y += speed;
-            drawCharacter(x, y);
+        if (pressed === 'ArrowUp') {
+            this.y -= this.speed;
         }
-        if (pressed == 'ArrowDown') {
-            y -= speed;
-            drawCharacter(x, y);
+        if (pressed === 'ArrowDown') {
+            this.y += this.speed;
         }
     }
 
-    function drawCharacter(xcoord, ycoord) {
-        Image(img, x, y, 200, 200, 200, 0, 0,)
+    drawCharacter() {
+        image(this.img, this.x, this.y, this.w, this.h);
     }
 }

@@ -31,13 +31,17 @@ class HealthBar {
     noStroke();
     fill(210, 210, 210);
     rect(this.x, this.y, this.width, this.height);
-
-    fill(255, 0, 0);
-    rect(this.x, this.y, this.getCurrentWidth(), this.height);
-
-    fill(255);
-    textSize(12);
-    textAlign(CENTER, CENTER);
-    text(`${this.currentHealth} / ${this.maxHealth} HP`, this.x + this.width / 2, this.y + this.height / 2);
   }
+
+  drawHealthBar(hb) {
+    //background(220);
+    noStroke();
+    fill(210, 210, 210);
+    rect(hb.x, hb.y, hb.width, hb.height);
+
+      fill(255);
+      textSize(12);
+      textAlign(CENTER, CENTER);
+      text(`${this.currentHealth} / ${this.maxHealth} HP`, this.x + this.width / 2, this.y + this.height / 2);
+    }
 }
