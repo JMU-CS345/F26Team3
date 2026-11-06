@@ -1,11 +1,17 @@
 let backgroundImage;
 
-function setup() {
-  backgroundImage = loadImage('/assets/environment/GrassyPlain.png');
+async function setup() {
+    createCanvas(400, 400);
 
-  createCanvas(400, 400);
+    backgroundImage = await loadImage('GrassyPlain.png');
 }
 
 function draw() {
-  image(backgroundImage, 0, 0);
+    if (backgroundImage) {
+        for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+            image(backgroundImage, col * 133, row * 133, 133, 133);
+    }
+        }
+    }
 }
