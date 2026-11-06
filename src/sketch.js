@@ -13,26 +13,19 @@ async function setup() {
     playerHealth = new HealthBar(100, 50, 50, 200, 20);
 }
 
-function keyPressed() {
-    // debugging
-    console.log(key);
-    return key;
-}
-
-function draw() {
-  if (backgroundImage) {
-    for (let row = 0; row < 3; row++) {
-      for (let col = 0; col < 3; col++) {
-        image(backgroundImage, col * 133, row * 133, 133, 133);
+function draw() { 
+  // Image for the background of a grassy plain
+    if (backgroundImage) {
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+          image(backgroundImage, col * 133, row * 133, 133, 133);
+        }
       }
     }
-  drawHealthBar(playerHealth);
+  playerHealth.draw();
 
   // character drawing and movement
-  let pressed = keyPressed();
-  if (keyIsPressed) {
-      smis.move(pressed);
-  }
+  smis.update();
   smis.drawCharacter();
 
     
