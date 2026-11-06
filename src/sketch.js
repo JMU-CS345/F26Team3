@@ -6,7 +6,8 @@ async function setup() {
     backgroundImage = await loadImage('GrassyPlain.png');
 }
 
-function draw() {
+function draw() { 
+  // Image for the background of a grassy plain
     if (backgroundImage) {
         for (let row = 0; row < 3; row++) {
         for (let col = 0; col < 3; col++) {
