@@ -34,7 +34,7 @@ Character moving on screen which has a background.
 
 **Known absences or reduced availability this sprint:** n/a
 
-**Points committed this sprint:** 5
+**Points committed this sprint:** 8
 
 **Why this commitment is realistic:** *(Compare it to your velocity and capacity. If you are committing more than last sprint's velocity, explain why.)*
 
