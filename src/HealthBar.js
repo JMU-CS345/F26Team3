@@ -26,22 +26,18 @@ class HealthBar {
   isDepleted() {
     return this.currentHealth === 0;
   }
-}
 
-let playerHealth = new HealthBar(100, 50, 50, 200, 20);
+  draw() {
+    noStroke();
+    fill(210, 210, 210);
+    rect(this.x, this.y, this.width, this.height);
 
-function drawHealthBar(hb) {
-  background(220);
-  noStroke();
-  fill(210, 210, 210);
-  rect(hb.x, hb.y, hb.width, hb.height);
+    fill(255, 0, 0);
+    rect(this.x, this.y, this.getCurrentWidth(), this.height);
 
-  fill(255, 0, 0);
-  let currentW = hb.getCurrentWidth();
-  rect(hb.x, hb.y, currentW, hb.height);
-
-  fill(255); 
-  textSize(12);
-  textAlign(CENTER, CENTER);
-  text(`${hb.currentHealth} / ${hb.maxHealth} HP`, hb.x + hb.width / 2, hb.y + hb.height / 2);
+    fill(255);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text(`${this.currentHealth} / ${this.maxHealth} HP`, this.x + this.width / 2, this.y + this.height / 2);
+  }
 }
