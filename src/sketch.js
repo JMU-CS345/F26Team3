@@ -11,7 +11,6 @@ async function setup() {
 
     smis = new character(200, 200, 4, characterImage);
     playerHealth = new HealthBar(100, 50, 50, 200, 20);
-}
 
 function draw() { 
   // Image for the background of a grassy plain
@@ -28,5 +27,4 @@ function draw() {
   smis.update();
   smis.drawCharacter();
 
-    
 }
