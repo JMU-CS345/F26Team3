@@ -57,7 +57,7 @@
 
 - One of our stories was left unfinished and no one noticed. 
 - The production branch link did not work for the demo, losing us points. 
-- 
+- People are not following the naming conventions set in the constitution. 
 
 ### What puzzled us or what we want to try
 
