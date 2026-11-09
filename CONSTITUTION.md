@@ -286,7 +286,7 @@ _Everybody has game time, at least two people on it before each review
 
 ## 7. Deployment
 
-**Where the game is deployed:** GitHub Pages, URL here
+**Where the game is deployed:** https://jmu-cs345.github.io/F26Team3/
 
 **What triggers a deploy:** *(e.g., a release PR from `main` into `production`, opened by the Scrum Master after each sprint review)*
 
