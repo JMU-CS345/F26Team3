@@ -69,30 +69,36 @@ Even though the points committed are far higher than those completed last sprint
 - [ ] Implement the interaction mechanic by allowing the user to pick up the flower by pressing E to change their type
 - [ ] Bring the flower to the puddle and change the puddle color
 - [ ] Create a temporary screen to display what kind of mage they are
+- [ ] Run tests to make sure each mage type is implemented
+- [ ] Create a pull request to main
 
 ### Issue #14: Keyboard based movement
 
 - [ ] Assign different images based on the key pressed (direction)
-- [ ]
-- [ ]
+- [ ] Run tests to make sure the directions change
+- [ ] Create a pull request to main
 
 ### Issue #39: Title Screen
 
 - [ ] Write a blurb about what our game does
 - [ ] Make the title screen and display the blurb
 - [ ] Implement the play button to take the user to the mage picking screen
+- [ ] Run tests to make sure the title screen works and progresses
+- [ ] Create a pull request to main
 
 ### Issue #38: Procedurally generated dungeon
 
 - [ ] Choose a type of generation
 - [ ] Make sure the paths are not being cut off by the walls 
-- [ ] Unit testing
+- [ ] Unit testing to make sure the generation works
+- [ ] Create a pull request to main
 
 ### Issue #44: Walls and player collision
 
 - [ ] Create a function in the player class that checks if the player is allowed to be there (boolean value)
 - [ ] Checks the collision in the update function - updates the player in that place if it is not a wall, or keeps them in place if they have reached a wall
-- [ ]
+- [ ] Run tests to make sure the collision function works
+- [ ] Create a pull request to main
  
 ---
 
