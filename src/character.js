@@ -20,6 +20,7 @@ class character {
         let vel = createVector(0, 0);
 
         // Check arrow keys or WASD simultaneously using keyIsDown()
+        // Im not sure the keycodes for wasd are correct
         if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) { // Left Arrow or 'A'
             vel.x -= 1;
         }
@@ -34,11 +35,26 @@ class character {
         }
 
         // Normalize vector so diagonal movement isn't faster, then apply speed
-        vel.normalize();
-        vel.mult(this.speed);
+        if (vel.mag() > 0) {
+            vel.normalize();
+            vel.mult(this.speed);
+        }
 
         // Add velocity vector to position vector
-        this.pos.add(vel);
+        let nextX = this.pos.x + vel.x;
+        if (!this.checkCollision(nextX, this.pos.y, dungeon)) {
+            this.pos.x = nextX;
+        }
+
+        // 2. Test Y movement independently
+        let nextY = this.pos.y + vel.y;
+        if (!this.checkCollision(this.pos.x, nextY, dungeon)) {
+            this.pos.y = nextY;
+        }
+    }
+
+    checkColission(px, py) {
+        return false;
     }
 
     drawCharacter() {
