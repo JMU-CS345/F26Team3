@@ -6,6 +6,7 @@ let smis;
 let dungeon;
 let dungeonFloorImage;
 let dungeonWallImage;
+let showDungeon = true;
 const dungeonTileSize = 20;
 
 function preload() {
