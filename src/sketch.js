@@ -6,7 +6,7 @@ let smis;
 let dungeon;
 let dungeonFloorImage;
 let dungeonWallImage;
-let showDungeon = true;
+let showDungeon = false;
 const dungeonTileSize = 20;
 
 function preload() {
@@ -32,6 +32,7 @@ function setup() {
 
 function draw() {
   // Image for the background of a grassy plain
+  // when showDungeon is true, smiski is drawn forever
   if (showDungeon && dungeon && dungeonFloorImage && dungeonWallImage) {
     drawDungeon(
       dungeon,
