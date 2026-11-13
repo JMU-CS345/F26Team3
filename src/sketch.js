@@ -32,7 +32,23 @@ function setup() {
 
 function draw() {
   // Image for the background of a grassy plain
-  if (backgroundImage) {
+  if (showDungeon && dungeon && dungeonFloorImage && dungeonWallImage) {
+    drawDungeon(
+      dungeon,
+      (tile, x, y, size) => {
+        image(
+          tile === 1 ? dungeonWallImage : dungeonFloorImage,
+          x,
+          y,
+          size,
+          size,
+        );
+      },
+      dungeonTileSize,
+    );
+  }
+
+  if (!showDungeon && backgroundImage) {
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
         image(backgroundImage, col * 133, row * 133, 133, 133);

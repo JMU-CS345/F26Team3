@@ -1,7 +1,7 @@
 class character {
   static #instance = null;
 
-  constructor(startX, startY, speed, imgMap) {
+  constructor(startX, startY, speed, size, imgMap) {
     if (character.#instance) {
       return character.#instance;
     }
