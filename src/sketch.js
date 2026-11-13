@@ -3,6 +3,10 @@ let playerHealth;
 let smiskiFront, smiskiBack, smiskiLeft, smiskiRight;
 let imgMap;
 let smis;
+let dungeon;
+let dungeonFloorImage;
+let dungeonWallImage;
+const dungeonTileSize = 20;
 
 function preload() {
   smiskiFront = loadImage("./src/assets/sprites/SmiskiFront.png");
