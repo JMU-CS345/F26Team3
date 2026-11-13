@@ -5,6 +5,7 @@ let smis;
 let dungeon;
 let dungeonFloorImage;
 let dungeonWallImage;
+let showDungeon = true;
 const dungeonTileSize = 20;
 
 async function setup() {
@@ -23,24 +24,23 @@ async function setup() {
 }
 
 function draw() { 
-  if (dungeon && dungeonFloorImage && dungeonWallImage) {
+  if (showDungeon && dungeon && dungeonFloorImage && dungeonWallImage) {
     drawDungeon(dungeon, (tile, x, y, size) => {
       image(tile === 1 ? dungeonWallImage : dungeonFloorImage, x, y, size, size);
     }, dungeonTileSize);
   }
 
-  // Image for the background of a grassy plain
-    if (backgroundImage && !dungeon) {
-      for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-          image(backgroundImage, col * 133, row * 133, 133, 133);
-        }
+  if (!showDungeon && backgroundImage) {
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        image(backgroundImage, col * 133, row * 133, 133, 133);
       }
     }
+  }
+
   playerHealth.draw();
 
   // character drawing and movement
   smis.update();
   smis.drawCharacter();
-
 }
