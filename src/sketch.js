@@ -12,7 +12,7 @@ const canvasHeight = 600;
 const dungeonTileSize = 20;
 const characterSize = 50;
 const dungeonCorridorWidth = Math.ceil(characterSize / dungeonTileSize);
-const dungeonExitCount = 2;
+const dungeonExitCount = 1;
 let titleScreen;
 
 // Native browser image loading: resolves only once the pixels are really there
