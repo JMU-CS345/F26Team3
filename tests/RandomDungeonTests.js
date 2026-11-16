@@ -14,8 +14,62 @@ describe("RandomDungeon", function() {
         expect([0, 1]).toContain(tile);
       });
     });
-    expect(tiles[0][0]).toBe(0);
-    expect(tiles[3][4]).toBe(0);
+    expect(tiles[0][0]).toBe(1);
+    expect(tiles[3][4]).toBe(1);
+  });
+
+  it("creates connected rooms, corridors, and configured exits", function() {
+    const dungeon = new RandomDungeon(20, 20, () => 0, 0);
+    dungeon.exitCount = 4;
+    const tiles = dungeon.generate();
+    const start = dungeon.getSafeStartPosition();
+    const exits = dungeon.getExitPositions();
+    const visited = new Set([start.y * dungeon.width + start.x]);
+    const pending = [start];
+
+    while (pending.length > 0) {
+      const current = pending.pop();
+      [
+        { x: current.x + 1, y: current.y },
+        { x: current.x - 1, y: current.y },
+        { x: current.x, y: current.y + 1 },
+        { x: current.x, y: current.y - 1 },
+      ].forEach(function(next) {
+        const key = next.y * dungeon.width + next.x;
+        if (
+          !dungeon.isWall(next.x, next.y) &&
+          !visited.has(key)
+        ) {
+          visited.add(key);
+          pending.push(next);
+        }
+      });
+    }
+
+    const floorCount = tiles.flat().filter(function(tile) {
+      return tile === 0;
+    }).length;
+    expect(floorCount).toBeGreaterThan(9);
+    expect(visited.size).toBe(floorCount);
+    expect(exits.length).toBe(4);
+    exits.forEach(function(exit) {
+      expect(dungeon.isWall(exit.x, exit.y)).toBe(false);
+    });
+    const borderFloorCount = tiles[0].filter((tile) => tile === 0).length +
+      tiles[dungeon.height - 1].filter((tile) => tile === 0).length +
+      tiles.slice(1, -1).filter((row) => row[0] === 0 || row[dungeon.width - 1] === 0).length;
+    expect(borderFloorCount).toBe(4);
+  });
+
+  it("rejects exit counts outside the available perimeter positions", function() {
+    const dungeon = new RandomDungeon(5, 5);
+
+    expect(function() {
+      dungeon.exitCount = 0;
+    }).toThrowError(RangeError);
+    expect(function() {
+      dungeon.exitCount = 13;
+    }).toThrowError(RangeError);
   });
 
   it("returns a safe floor position after generation", function() {
@@ -49,14 +103,15 @@ describe("RandomDungeon", function() {
   });
 
   it("uses the supplied random source to create different layouts", function() {
-    const openDungeon = new RandomDungeon(5, 5, () => 0, 0);
-    const walledDungeon = new RandomDungeon(5, 5, () => 0.1, 0.5);
+    const openDungeon = new RandomDungeon(20, 20, () => 0, 0);
+    const walledDungeon = new RandomDungeon(20, 20, () => 0.1, 0.5);
 
-    openDungeon.generate();
-    walledDungeon.generate();
+    const openTiles = openDungeon.generate();
+    const walledTiles = walledDungeon.generate();
 
-    expect(openDungeon.isWall(0, 0)).toBe(false);
-    expect(walledDungeon.isWall(0, 0)).toBe(true);
+    expect(openTiles.flat().filter((tile) => tile === 0).length).toBeGreaterThan(
+      walledTiles.flat().filter((tile) => tile === 0).length
+    );
   });
 
   it("renders tiles through a mock callback without p5 calls", function() {
@@ -72,8 +127,8 @@ describe("RandomDungeon", function() {
     drawDungeon(dungeon, mockRenderer.drawTile.bind(mockRenderer), 16);
 
     expect(mockRenderer.calls.length).toBe(9);
-    expect(mockRenderer.calls[0]).toEqual({ tile: 0, x: 0, y: 0, size: 16 });
-    expect(mockRenderer.calls[8]).toEqual({ tile: 0, x: 32, y: 32, size: 16 });
+    expect(mockRenderer.calls[0]).toEqual({ tile: 1, x: 0, y: 0, size: 16 });
+    expect(mockRenderer.calls[8]).toEqual({ tile: 1, x: 32, y: 32, size: 16 });
   });
 
   it("rejects a missing draw callback", function() {

@@ -7,6 +7,7 @@ let dungeonFloorImage;
 let dungeonWallImage;
 let showDungeon = true;
 const dungeonTileSize = 20;
+const dungeonExitCount = 1;
 
 async function setup() {
     createCanvas(400, 400);
@@ -17,6 +18,7 @@ async function setup() {
     dungeonWallImage = await loadImage('./src/assets/DunegonWallsAndFloors/dungeon-wall.svg');
 
     dungeon = new RandomDungeon(20, 20);
+    dungeon.exitCount = dungeonExitCount;
     dungeon.generate();
     const safeStart = dungeon.getSafeStartPosition();
     smis = new character(safeStart.x * dungeonTileSize, safeStart.y * dungeonTileSize, 4, characterImage);
