@@ -42,6 +42,6 @@ class character {
     }
 
     drawCharacter() {
-        image(this.img, this.pos.x, this.pos.y, this.w, this.h);
+        drawImg(this.img, this.pos.x, this.pos.y, this.w, this.h);
     }
 }
