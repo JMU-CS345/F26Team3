@@ -25,6 +25,7 @@ class RandomDungeon {
     this.safeStart = null;
     this.exits = [];
     this._exitCount = 1;
+    this._corridorWidth = 1;
   }
 
   get exitCount() {
@@ -32,13 +33,49 @@ class RandomDungeon {
   }
 
   set exitCount(count) {
-    const maxExits = 2 * (this.width - 2) + 2 * (this.height - 2);
+    const maxExits = this._getMaxExitCount(this._corridorWidth);
     if (!Number.isInteger(count) || count < 1 || count > maxExits) {
       throw new RangeError(
         `Exit count must be an integer between 1 and ${maxExits}.`
       );
     }
     this._exitCount = count;
+  }
+
+  get corridorWidth() {
+    return this._corridorWidth;
+  }
+
+  set corridorWidth(width) {
+    const maxWidth = Math.min(this.width, this.height) - 2;
+    if (!Number.isInteger(width) || width < 1 || width > maxWidth) {
+      throw new RangeError(
+        `Corridor width must be an integer between 1 and ${maxWidth}.`
+      );
+    }
+    if (this._exitCount > this._getMaxExitCount(width)) {
+      throw new RangeError(
+        "Corridor width leaves too few perimeter positions for the configured exits."
+      );
+    }
+    this._corridorWidth = width;
+  }
+
+  _getMaxExitCount(corridorWidth) {
+    const startOffset = -Math.floor((corridorWidth - 1) / 2);
+    const endOffset = startOffset + corridorWidth - 1;
+    const slotsOnSide = (length) => {
+      const firstPosition = 1 - startOffset;
+      const lastPosition = length - 2 - endOffset;
+      if (lastPosition < firstPosition) {
+        return 0;
+      }
+      return (
+        Math.floor((lastPosition - firstPosition) / (corridorWidth + 1)) + 1
+      );
+    };
+
+    return 2 * slotsOnSide(this.width) + 2 * slotsOnSide(this.height);
   }
 
   generate() {
@@ -56,19 +93,69 @@ class RandomDungeon {
       }
     };
     const carveHorizontalCorridor = (y, startX, endX) => {
-      for (let x = Math.min(startX, endX); x <= Math.max(startX, endX); x++) {
-        this.tiles[y][x] = 0;
+      const startY = y - Math.floor((this.corridorWidth - 1) / 2);
+      for (let offset = 0; offset < this.corridorWidth; offset++) {
+        const corridorY = startY + offset;
+        if (corridorY < 0 || corridorY >= this.height) {
+          continue;
+        }
+        for (
+          let x = Math.min(startX, endX);
+          x <= Math.max(startX, endX);
+          x++
+        ) {
+          this.tiles[corridorY][x] = 0;
+        }
       }
     };
     const carveVerticalCorridor = (x, startY, endY) => {
-      for (let y = Math.min(startY, endY); y <= Math.max(startY, endY); y++) {
-        this.tiles[y][x] = 0;
+      const startX = x - Math.floor((this.corridorWidth - 1) / 2);
+      for (let offset = 0; offset < this.corridorWidth; offset++) {
+        const corridorX = startX + offset;
+        if (corridorX < 0 || corridorX >= this.width) {
+          continue;
+        }
+        for (
+          let y = Math.min(startY, endY);
+          y <= Math.max(startY, endY);
+          y++
+        ) {
+          this.tiles[y][corridorX] = 0;
+        }
       }
     };
     const roomCenter = (room) => ({
       x: room.x + Math.floor(room.width / 2),
       y: room.y + Math.floor(room.height / 2),
     });
+    const connectRooms = (firstRoom, secondRoom) => {
+      const firstCenter = roomCenter(firstRoom);
+      const secondCenter = roomCenter(secondRoom);
+
+      if (this.random() < 0.5) {
+        carveHorizontalCorridor(
+          firstCenter.y,
+          firstCenter.x,
+          secondCenter.x
+        );
+        carveVerticalCorridor(
+          secondCenter.x,
+          firstCenter.y,
+          secondCenter.y
+        );
+      } else {
+        carveVerticalCorridor(
+          firstCenter.x,
+          firstCenter.y,
+          secondCenter.y
+        );
+        carveHorizontalCorridor(
+          secondCenter.y,
+          firstCenter.x,
+          secondCenter.x
+        );
+      }
+    };
 
     const startRoom = {
       width: Math.min(5, this.width - 2),
@@ -79,15 +166,16 @@ class RandomDungeon {
       Math.floor(this.height / 2) - Math.floor(startRoom.height / 2);
     const rooms = [startRoom];
 
-    const maxRoomWidth = Math.min(7, this.width - 2);
-    const maxRoomHeight = Math.min(7, this.height - 2);
-    const minRoomWidth = Math.min(3, maxRoomWidth);
-    const minRoomHeight = Math.min(3, maxRoomHeight);
+    const maxRoomWidth = Math.max(1, Math.min(14, this.width - 4));
+    const maxRoomHeight = Math.max(1, Math.min(10, this.height - 4));
+    const minRoomWidth = Math.min(7, maxRoomWidth);
+    const minRoomHeight = Math.min(6, maxRoomHeight);
     const maxRooms = Math.min(
       6,
       Math.max(2, Math.floor((this.width * this.height) / 65))
     );
-    const placementAttempts = maxRooms * 20;
+    const maxRoomsPerHalf = Math.ceil(maxRooms / 2);
+    const placementAttempts = maxRooms * 12;
 
     for (
       let attempt = 0;
@@ -98,71 +186,183 @@ class RandomDungeon {
         continue;
       }
 
-      const room = {
-        width: randomInteger(minRoomWidth, maxRoomWidth),
-        height: randomInteger(minRoomHeight, maxRoomHeight),
-      };
-      room.x = randomInteger(1, this.width - room.width - 1);
-      room.y = randomInteger(1, this.height - room.height - 1);
+      const candidates = [];
+      for (let sample = 0; sample < 12; sample++) {
+        const room = {
+          width: randomInteger(minRoomWidth, maxRoomWidth),
+          height: randomInteger(minRoomHeight, maxRoomHeight),
+        };
+        const maxX = this.width - room.width - 2;
+        const maxY = this.height - room.height - 2;
+        if (maxX < 2 || maxY < 2) {
+          continue;
+        }
+        room.x = randomInteger(2, maxX);
+        room.y = randomInteger(2, maxY);
 
-      const overlapsRoom = rooms.some(
-        (existingRoom) =>
-          room.x <= existingRoom.x + existingRoom.width &&
-          room.x + room.width >= existingRoom.x &&
-          room.y <= existingRoom.y + existingRoom.height &&
-          room.y + room.height >= existingRoom.y
-      );
-      if (!overlapsRoom) {
-        rooms.push(room);
+        const overlapsRoom = rooms.some(
+          (existingRoom) =>
+            room.x <= existingRoom.x + existingRoom.width &&
+            room.x + room.width >= existingRoom.x &&
+            room.y <= existingRoom.y + existingRoom.height &&
+            room.y + room.height >= existingRoom.y
+        );
+        if (overlapsRoom) {
+          continue;
+        }
+
+        const center = roomCenter(room);
+        const roomsInSameHalf = rooms.reduce(
+          (counts, existingRoom) => {
+            const existingCenter = roomCenter(existingRoom);
+            const sameHorizontalHalf =
+              (existingCenter.x < this.width / 2) ===
+              (center.x < this.width / 2);
+            const sameVerticalHalf =
+              (existingCenter.y < this.height / 2) ===
+              (center.y < this.height / 2);
+            if (sameHorizontalHalf) {
+              counts.horizontal++;
+            }
+            if (sameVerticalHalf) {
+              counts.vertical++;
+            }
+            return counts;
+          },
+          { horizontal: 0, vertical: 0 }
+        );
+        if (
+          roomsInSameHalf.horizontal >= maxRoomsPerHalf ||
+          roomsInSameHalf.vertical >= maxRoomsPerHalf
+        ) {
+          continue;
+        }
+
+        candidates.push(room);
+      }
+
+      if (candidates.length > 0) {
+        rooms.push(candidates[randomInteger(0, candidates.length - 1)]);
       }
     }
 
     rooms.forEach(carveRoom);
-    for (let index = 1; index < rooms.length; index++) {
-      const previousCenter = roomCenter(rooms[index - 1]);
-      const currentCenter = roomCenter(rooms[index]);
-
-      if (this.random() < 0.5) {
-        carveHorizontalCorridor(
-          previousCenter.y,
-          previousCenter.x,
-          currentCenter.x
-        );
-        carveVerticalCorridor(
-          currentCenter.x,
-          previousCenter.y,
-          currentCenter.y
-        );
-      } else {
-        carveVerticalCorridor(
-          previousCenter.x,
-          previousCenter.y,
-          currentCenter.y
-        );
-        carveHorizontalCorridor(
-          currentCenter.y,
-          previousCenter.x,
-          currentCenter.x
-        );
-      }
+    const pendingRoomIndices = Array.from(
+      { length: rooms.length - 1 },
+      (_, index) => index + 1
+    );
+    for (let index = pendingRoomIndices.length - 1; index > 0; index--) {
+      const swapIndex = randomInteger(0, index);
+      [
+        pendingRoomIndices[index],
+        pendingRoomIndices[swapIndex],
+      ] = [
+        pendingRoomIndices[swapIndex],
+        pendingRoomIndices[index],
+      ];
     }
 
+    const connectedRoomIndices = [0];
+    const connectedPairs = new Set();
+    const connectRoomIndices = (firstIndex, secondIndex) => {
+      const pairKey = [firstIndex, secondIndex].sort((a, b) => a - b).join(":");
+      if (connectedPairs.has(pairKey)) {
+        return;
+      }
+      connectedPairs.add(pairKey);
+      connectRooms(rooms[firstIndex], rooms[secondIndex]);
+    };
+
+    pendingRoomIndices.forEach((roomIndex) => {
+      const center = roomCenter(rooms[roomIndex]);
+      const nearestConnectedRooms = connectedRoomIndices
+        .map((connectedIndex) => {
+          const connectedCenter = roomCenter(rooms[connectedIndex]);
+          return {
+            index: connectedIndex,
+            distance:
+              Math.abs(center.x - connectedCenter.x) +
+              Math.abs(center.y - connectedCenter.y),
+          };
+        })
+        .sort((first, second) => first.distance - second.distance)
+        .slice(0, 3);
+      const parent =
+        nearestConnectedRooms[
+          randomInteger(0, nearestConnectedRooms.length - 1)
+        ];
+
+      connectRoomIndices(roomIndex, parent.index);
+      connectedRoomIndices.push(roomIndex);
+    });
+
+    rooms.forEach((room, roomIndex) => {
+      const center = roomCenter(room);
+      const nearbyRooms = rooms
+        .map((otherRoom, otherIndex) => {
+          const otherCenter = roomCenter(otherRoom);
+          return {
+            index: otherIndex,
+            distance:
+              Math.abs(center.x - otherCenter.x) +
+              Math.abs(center.y - otherCenter.y),
+          };
+        })
+        .filter(
+          (other) =>
+            other.index !== roomIndex &&
+            !connectedPairs.has(
+              [roomIndex, other.index].sort((a, b) => a - b).join(":")
+            )
+        )
+        .sort((first, second) => first.distance - second.distance)
+        .slice(0, 3);
+
+      if (nearbyRooms.length > 0) {
+        const other =
+          nearbyRooms[randomInteger(0, nearbyRooms.length - 1)];
+        connectRoomIndices(roomIndex, other.index);
+      }
+    });
+
     const exitCandidates = [];
-    for (let x = 1; x < this.width - 1; x++) {
-      exitCandidates.push({ x, y: 0, insideX: x, insideY: 1 });
+    const corridorStartOffset = -Math.floor((this.corridorWidth - 1) / 2);
+    const corridorEndOffset =
+      corridorStartOffset + this.corridorWidth - 1;
+    const exitPositions = (length) => {
+      const positions = [];
+      const firstPosition = 1 - corridorStartOffset;
+      const lastPosition = length - 2 - corridorEndOffset;
+      for (
+        let position = firstPosition;
+        position <= lastPosition;
+        position += this.corridorWidth + 1
+      ) {
+        positions.push(position);
+      }
+      return positions;
+    };
+
+    for (const x of exitPositions(this.width)) {
+      exitCandidates.push({
+        x,
+        y: 0,
+        insideX: x,
+        insideY: 1 - corridorStartOffset,
+      });
       exitCandidates.push({
         x,
         y: this.height - 1,
         insideX: x,
-        insideY: this.height - 2,
+        insideY: this.height - 2 - corridorEndOffset,
       });
     }
-    for (let y = 1; y < this.height - 1; y++) {
+    for (const y of exitPositions(this.height)) {
       exitCandidates.push({ x: 0, y, insideX: 1, insideY: y });
       exitCandidates.push({
         x: this.width - 1,
         y,
-        insideX: this.width - 2,
+        insideX: this.width - 2 - corridorEndOffset,
         insideY: y,
       });
     }

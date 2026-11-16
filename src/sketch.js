@@ -7,8 +7,12 @@ let dungeon;
 let dungeonFloorImage;
 let dungeonWallImage;
 let showDungeon = true;
+const canvasWidth = 1000;
+const canvasHeight = 600;
 const dungeonTileSize = 20;
-const dungeonExitCount = 1;
+const characterSize = 50;
+const dungeonCorridorWidth = Math.ceil(characterSize / dungeonTileSize);
+const dungeonExitCount = 2;
 let titleScreen;
 
 // Native browser image loading: resolves only once the pixels are really there
@@ -27,18 +31,24 @@ function drawImg(img, x, y, w, h) {
 }
 
 async function setup() {
-  createCanvas(1000, 600);
+  createCanvas(canvasWidth, canvasHeight);
 
   backgroundImage = await loadImg('./src/assets/environment/GrassyPlain.png');
   characterImage  = await loadImg('./src/assets/tmp/SmiskiTEMP.jpg');
   dungeonFloorImage = await loadImage('./src/assets/DunegonWallsAndFloors/dungeon-floor.svg');
   dungeonWallImage = await loadImage('./src/assets/DunegonWallsAndFloors/dungeon-wall.svg');
 
-  dungeon = new RandomDungeon(20, 20);
+  dungeon = new RandomDungeon(
+    canvasWidth / dungeonTileSize,
+    canvasHeight / dungeonTileSize
+  );
+  dungeon.corridorWidth = dungeonCorridorWidth;
   dungeon.exitCount = dungeonExitCount;
   dungeon.generate();
   const safeStart = dungeon.getSafeStartPosition();
   smis = new character(safeStart.x * dungeonTileSize, safeStart.y * dungeonTileSize, 4, characterImage);
+  smis.w = characterSize;
+  smis.h = characterSize;
   playerHealth = new HealthBar(100, 50, 50, 200, 20);
   overWorld = new OverWorld(backgroundImage);
   titleScreen = new TitleScreen();

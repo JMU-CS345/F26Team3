@@ -19,7 +19,8 @@ describe("RandomDungeon", function() {
   });
 
   it("creates connected rooms, corridors, and configured exits", function() {
-    const dungeon = new RandomDungeon(20, 20, () => 0, 0);
+    const dungeon = new RandomDungeon(50, 30, () => 0, 0);
+    dungeon.corridorWidth = 3;
     dungeon.exitCount = 4;
     const tiles = dungeon.generate();
     const start = dungeon.getSafeStartPosition();
@@ -54,11 +55,32 @@ describe("RandomDungeon", function() {
     expect(exits.length).toBe(4);
     exits.forEach(function(exit) {
       expect(dungeon.isWall(exit.x, exit.y)).toBe(false);
+      const offsets = [-1, 0, 1];
+      offsets.forEach(function(offset) {
+        const x = exit.y === 0 || exit.y === dungeon.height - 1
+          ? exit.x + offset
+          : exit.x;
+        const y = exit.x === 0 || exit.x === dungeon.width - 1
+          ? exit.y + offset
+          : exit.y;
+        expect(dungeon.isWall(x, y)).toBe(false);
+      });
     });
     const borderFloorCount = tiles[0].filter((tile) => tile === 0).length +
       tiles[dungeon.height - 1].filter((tile) => tile === 0).length +
       tiles.slice(1, -1).filter((row) => row[0] === 0 || row[dungeon.width - 1] === 0).length;
-    expect(borderFloorCount).toBe(4);
+    expect(borderFloorCount).toBe(12);
+  });
+
+  it("rejects corridor widths that cannot fit inside the dungeon", function() {
+    const dungeon = new RandomDungeon(5, 5);
+
+    expect(function() {
+      dungeon.corridorWidth = 0;
+    }).toThrowError(RangeError);
+    expect(function() {
+      dungeon.corridorWidth = 4;
+    }).toThrowError(RangeError);
   });
 
   it("rejects exit counts outside the available perimeter positions", function() {
@@ -103,8 +125,8 @@ describe("RandomDungeon", function() {
   });
 
   it("uses the supplied random source to create different layouts", function() {
-    const openDungeon = new RandomDungeon(20, 20, () => 0, 0);
-    const walledDungeon = new RandomDungeon(20, 20, () => 0.1, 0.5);
+    const openDungeon = new RandomDungeon(50, 30, () => 0, 0);
+    const walledDungeon = new RandomDungeon(50, 30, () => 0.1, 0.5);
 
     const openTiles = openDungeon.generate();
     const walledTiles = walledDungeon.generate();
@@ -112,6 +134,44 @@ describe("RandomDungeon", function() {
     expect(openTiles.flat().filter((tile) => tile === 0).length).toBeGreaterThan(
       walledTiles.flat().filter((tile) => tile === 0).length
     );
+  });
+
+  it("generates dense, varied layouts for larger dungeons", function() {
+    function makeRandom(seed) {
+      return function() {
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        return seed / 4294967296;
+      };
+    }
+
+    const firstDungeon = new RandomDungeon(50, 30, makeRandom(1));
+    const secondDungeon = new RandomDungeon(50, 30, makeRandom(2));
+    firstDungeon.corridorWidth = 3;
+    secondDungeon.corridorWidth = 3;
+
+    const firstTiles = firstDungeon.generate();
+    const secondTiles = secondDungeon.generate();
+    const floorCount = firstTiles.flat().filter((tile) => tile === 0).length;
+    const horizontalHalfFloorCounts = [0, 0];
+    const verticalHalfFloorCounts = [0, 0];
+
+    firstTiles.forEach(function(row, y) {
+      row.forEach(function(tile, x) {
+        if (tile === 0) {
+          horizontalHalfFloorCounts[x < 25 ? 0 : 1]++;
+          verticalHalfFloorCounts[y < 15 ? 0 : 1]++;
+        }
+      });
+    });
+
+    expect(floorCount).toBeGreaterThan(600);
+    horizontalHalfFloorCounts.forEach(function(count) {
+      expect(count).toBeGreaterThan(100);
+    });
+    verticalHalfFloorCounts.forEach(function(count) {
+      expect(count).toBeGreaterThan(100);
+    });
+    expect(firstTiles.flat().join("")).not.toBe(secondTiles.flat().join(""));
   });
 
   it("renders tiles through a mock callback without p5 calls", function() {
