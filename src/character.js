@@ -83,12 +83,14 @@ class character {
 
   checkCollision(px, py) {
     if (!this.dungeon) return false;
+    // corners of smiski
     const corners = [
       [px, py],
       [px + this.w - 1, py],
       [px, py + this.h - 1],
       [px + this.w - 1, py + this.h - 1],
     ];
+    // returns true if dungeon.isWall returns true for either position
     return corners.some(([cx, cy]) =>
       this.dungeon.isWall(Math.floor(cx / this.tileSize), Math.floor(cy / this.tileSize))
     );
@@ -96,6 +98,5 @@ class character {
 
   drawCharacter() {
     drawImage(this.currentImg, this.pos.x, this.pos.y, this.w, this.h);
-     m
   }
 }

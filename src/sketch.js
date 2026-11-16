@@ -50,5 +50,3 @@ function draw() {
 function mousePressed() {
   if (titleScreen) titleScreen.mousePressed();
 }
-
-
