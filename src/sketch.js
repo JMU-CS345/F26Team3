@@ -24,9 +24,19 @@ async function setup() {
   createCanvas(1000, 600);
 
   backgroundImage = await loadImg('./src/assets/environment/GrassyPlain.png');
-  characterImage  = await loadImg('./src/assets/tmp/SmiskiTEMP.jpg');
+  smisFront = await loadImg('./src/assets/sprites/SmiskiFront.png');
+  smisBack = await loadImg('./src/assets/sprites/SmiskiBack.png');
+  smisLeft = await loadImg('./src/assets/sprites/SmiskiLeft.png');
+  smisRight = await loadImg('./src/assets/sprites/SmiskiRight.png');
 
-  smis = new character(200, 200, 4, characterImage);
+  SmisMap = {
+    front: smisFront,
+    back: smisBack,
+    left: smisLeft,
+    right: smisRight
+  };
+
+  smis = new character(200, 200, 4, SmisMap);
   playerHealth = new HealthBar(100, 50, 50, 200, 20);
   overWorld = new OverWorld(backgroundImage);
   titleScreen = new TitleScreen();
