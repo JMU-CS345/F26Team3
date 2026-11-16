@@ -25,11 +25,14 @@ async function setup() {
 
   backgroundImage = await loadImg('./src/assets/environment/GrassyPlain.png');
   characterImage  = await loadImg('./src/assets/tmp/SmiskiTEMP.jpg');
+  fireFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Fire.png');
+  iceFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Ice.png');
+  mindFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Mind.png');
 
   smis = new character(200, 200, 4, characterImage);
   playerHealth = new HealthBar(100, 50, 50, 200, 20);
   overWorld = new OverWorld(backgroundImage);
-  titleScreen = new TitleScreen();
+  titleScreen = new TitleScreen(fireFlower, iceFlower, mindFlower);
 }
 
 function draw() {
