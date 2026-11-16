@@ -5,7 +5,7 @@ let smis;
 let dungeon;
 let dungeonFloorImage;
 let dungeonWallImage;
-let showDungeon = false;
+let showDungeon = true;
 const canvasWidth = 1000;
 const canvasHeight = 600;
 const dungeonTileSize = 20;
