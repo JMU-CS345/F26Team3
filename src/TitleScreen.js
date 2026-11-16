@@ -1,7 +1,10 @@
 class TitleScreen {
-  constructor() {
+  constructor(fire, ice, mind) {
   this.title = true;
   this.btn = { x: 500, y: 400, w: 200, h: 60 };
+  this.fire = fire;
+  this.ice = ice;
+  this.mind = mind;
 
     window.addEventListener('mousedown', () => {
     if (this.title && this.isHovering()) this.title = false;
@@ -31,11 +34,12 @@ class TitleScreen {
 
     textSize(20);
     text("Hello Traveler! ", 500, 150);
-    text("This game will allow you to become magical mage on a quest to defeat the evil boss", 500, 180);
-    text("Dungeons full of foes await you, as well as treasures beyond your wildest dreams", 500, 200);
-    text("Solve puzzles, defeat enemies and collect items to complete your noble quest", 500, 220);
+    text("This game will allow you to become magical mage on a quest to defeat the evil boss", 500, 200);
+    text("Dungeons full of foes await you, as well as treasures beyond your wildest dreams", 500, 220);
+    text("Solve puzzles, defeat enemies and collect items to complete your noble quest", 500, 240);
 
     this.drawPlayButton();
+    this.drawFlowers();
     pop();
   }
 
@@ -53,7 +57,7 @@ class TitleScreen {
     noStroke();
     fill(255);
     textSize(28);
-    text("Play", this.btn.x, this.btn.y);
+    text("Start Quest!", this.btn.x, this.btn.y);
 
     cursor(hover ? HAND : ARROW);
   }
@@ -62,5 +66,27 @@ class TitleScreen {
     if (this.title && this.isHovering()) {
       this.title = false;
     }
+  }
+
+  drawFlowers() {
+    // fire flowers 
+    drawImg(this.fire, 40, 300, 40, 40);
+    drawImg(this.fire, 800, 450, 40, 40);
+    drawImg(this.fire, 300, 50, 40, 40);
+    drawImg(this.fire, 950, 200, 40, 40);
+    drawImg(this.fire, 550, 320, 40, 40);
+
+    //ice flowers
+    drawImg(this.ice, 150, 500, 40, 40);
+    drawImg(this.ice, 650, 150, 40, 40);
+    drawImg(this.ice, 875, 300, 40, 40);
+    drawImg(this.ice, 5, 30, 40, 40);
+
+    //mind flowers
+    drawImg(this.mind, 500, 550, 40, 40);
+    drawImg(this.mind, 850, 20, 40, 40);
+    drawImg(this.mind, 145, 100, 40, 40);
+    drawImg(this.mind, 260, 400, 40, 40);
+    drawImg(this.mind, 945, 490, 40, 40);
   }
 }
