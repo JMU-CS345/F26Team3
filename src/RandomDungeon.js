@@ -85,3 +85,11 @@ function drawDungeon(dungeon, drawTile, tileSize) {
     });
   });
 }
+
+if (typeof window !== "undefined") {
+  window.RandomDungeon = RandomDungeon;
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = RandomDungeon;
+}

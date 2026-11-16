@@ -1,4 +1,8 @@
 describe("RandomDungeon", function() {
+  it("exposes its constructor to external browser callers", function() {
+    expect(window.RandomDungeon).toBe(RandomDungeon);
+  });
+
   it("generates a rectangular grid containing only wall and floor values", function() {
     const dungeon = new RandomDungeon(5, 4, () => 0.9, 0.5);
     const tiles = dungeon.generate();
