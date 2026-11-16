@@ -96,5 +96,6 @@ class character {
 
   drawCharacter() {
     drawImage(this.currentImg, this.pos.x, this.pos.y, this.w, this.h);
+     m
   }
 }
