@@ -24,12 +24,24 @@ async function setup() {
   createCanvas(1000, 600);
 
   backgroundImage = await loadImg('./src/assets/environment/GrassyPlain.png');
-  characterImage  = await loadImg('./src/assets/tmp/SmiskiTEMP.jpg');
+  smisFront = await loadImg('./src/assets/sprites/SmiskiFront.png');
+  smisBack = await loadImg('./src/assets/sprites/SmiskiBack.png');
+  smisLeft = await loadImg('./src/assets/sprites/SmiskiLeft.png');
+  smisRight = await loadImg('./src/assets/sprites/SmiskiRight.png');
+
+  SmisMap = {
+    front: smisFront,
+    back: smisBack,
+    left: smisLeft,
+    right: smisRight
+  };
+
+  smis = new character(200, 200, 4, SmisMap);
+  
   fireFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Fire.png');
   iceFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Ice.png');
   mindFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Mind.png');
 
-  smis = new character(200, 200, 4, characterImage);
   playerHealth = new HealthBar(100, 50, 50, 200, 20);
   overWorld = new OverWorld(backgroundImage);
   titleScreen = new TitleScreen(fireFlower, iceFlower, mindFlower);
@@ -53,5 +65,3 @@ function draw() {
 function mousePressed() {
   if (titleScreen) titleScreen.mousePressed();
 }
-
-

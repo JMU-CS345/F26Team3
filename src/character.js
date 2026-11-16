@@ -1,47 +1,102 @@
 class character {
-    static #instance = null;
+  static #instance = null;
 
-    constructor(startX, startY, speed, tempImg) {
-        if (character.#instance) {
-            return character.#instance;
-        }
-        character.#instance = this;
+  constructor(startX, startY, speed, imgMap) {
+    if (character.#instance) {
+      return character.#instance;
+    }
+    character.#instance = this;
 
-        // Position vector
-        this.pos = createVector(startX, startY);
-        this.speed = speed;
-        this.img = tempImg;
-        this.w = 50;
-        this.h = 50;
+    // Position vector
+    this.pos = createVector(startX, startY);
+    this.speed = speed;
+    this.imgMap = imgMap;
+    this.w = 50;
+    this.h = 50;
+    this.currentImg = imgMap.front;
+  }
+
+  update() {
+    // Create a velocity vector starting at (0,0) every frame
+    let vel = createVector(0, 0);
+
+    // Check arrow keys or WASD simultaneously using keyIsDown()
+    // Im not sure the keycodes for wasd are correct
+    if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+      // Left Arrow or 'A'
+      vel.x -= 1;
+    }
+    if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+      // Right Arrow or 'D'
+      vel.x += 1;
+    }
+    if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+      // Up Arrow or 'W'
+      vel.y -= 1;
+    }
+    if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+      // Down Arrow or 'S'
+      vel.y += 1;
     }
 
-    update() {
-        // Create a velocity vector starting at (0,0) every frame
-        let vel = createVector(0, 0);
+    // Normalize vector so diagonal movement isn't faster, then apply speed
+    if (vel.mag() > 0) {
+      vel.normalize();
 
-        // Check arrow keys or WASD simultaneously using keyIsDown()
-        if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) { // Left Arrow or 'A'
-            vel.x -= 1;
+      // Change the current image based on the dominant direction of movement
+      if (abs(vel.y) >= abs(vel.x)) {
+        if (vel.y < 0) {
+          this.currentImg = this.imgMap.back; // Moving Up / 'W'
+        } else {
+          this.currentImg = this.imgMap.front; // Moving Down / 'S'
         }
-        if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) { // Right Arrow or 'D'
-            vel.x += 1;
+      } else {
+        if (vel.x < 0) {
+          this.currentImg = this.imgMap.left; // Moving Left / 'A'
+        } else {
+          this.currentImg = this.imgMap.right; // Moving Right / 'D'
         }
-        if (keyIsDown(UP_ARROW) || keyIsDown(87)) { // Up Arrow or 'W'
-            vel.y -= 1;
-        }
-        if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) { // Down Arrow or 'S'
-            vel.y += 1;
-        }
+      }
 
-        // Normalize vector so diagonal movement isn't faster, then apply speed
-        vel.normalize();
-        vel.mult(this.speed);
-
-        // Add velocity vector to position vector
-        this.pos.add(vel);
+      vel.mult(this.speed);
     }
 
-    drawCharacter() {
-        drawImg(this.img, this.pos.x, this.pos.y, this.w, this.h);
+    // Add velocity vector to position vector
+
+    // Test if X is inbounds
+    let nextX = this.pos.x + vel.x;
+    if (!this.checkCollision(nextX, this.pos.y)) {
+      this.pos.x = nextX;
     }
+
+    // Test if Y is inbounds
+    let nextY = this.pos.y + vel.y;
+    if (!this.checkCollision(this.pos.x, nextY)) {
+      this.pos.y = nextY;
+    }
+  }
+
+  setDungeon(dungeon, tileSize) {
+    this.dungeon = dungeon;
+    this.tileSize = tileSize;
+  }
+
+  checkCollision(px, py) {
+    if (!this.dungeon) return false;
+    // corners of smiski
+    const corners = [
+      [px, py],
+      [px + this.w - 1, py],
+      [px, py + this.h - 1],
+      [px + this.w - 1, py + this.h - 1],
+    ];
+    // returns true if dungeon.isWall returns true for either position
+    return corners.some(([cx, cy]) =>
+      this.dungeon.isWall(Math.floor(cx / this.tileSize), Math.floor(cy / this.tileSize))
+    );
+  }
+
+  drawCharacter() {
+    drawImg(this.currentImg, this.pos.x, this.pos.y, this.w, this.h);
+  }
 }
