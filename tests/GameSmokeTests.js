@@ -8,6 +8,17 @@ const GAME_URL = "index.html"; // path to the game page, relative to SpecRunner.
 const START_BUTTON = { x: 500, y: 400 }; // where the title screen's start button is (canvas coordinates)
 
 describe("Game smoke tests", function () {
+  // fetch() and same-origin iframes are blocked by Chrome on file:// pages
+  if (location.protocol === "file:") {
+    it("needs SpecRunner.html to be served over http, not opened as a file", function () {
+      throw new Error(
+        "SpecRunner.html was opened with file://. Serve the project over http " +
+        "(e.g. `python3 -m http.server 8000`) and open http://127.0.0.1:8000/SpecRunner.html"
+      );
+    });
+    return;
+  }
+
   let iframe = null;
 
   // Runs inside the game page before any of its own scripts, to record problems
