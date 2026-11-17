@@ -96,6 +96,15 @@ class character {
     );
   }
 
+  getPos() {
+    return { x: this.x, y: this.y };
+  }
+
+  setSize(height, width) {
+    this.h = height;
+    this.w = width;
+  }
+
   drawCharacter() {
     drawImg(this.currentImg, this.pos.x, this.pos.y, this.w, this.h);
   }
