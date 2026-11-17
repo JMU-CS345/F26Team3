@@ -85,9 +85,9 @@ class MageSelectScreen {
     }
 
     finalChoice() {
-        if (this.whichZone == 4 && getFlower() > 0 && getFlower() < 4) {
+        if (this.whichZone() == 4 && getFlower() > 0 && getFlower() < 4) {
             if (keyIsPressed('E')) {
-                return 0;
+                this.gardenBoolean = false;
             }
         }
     }
