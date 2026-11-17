@@ -13,7 +13,6 @@ const characterSize = 50;
 const dungeonCorridorWidth = Math.ceil(characterSize / dungeonTileSize);
 const dungeonExitCount = 1;
 let titleScreen;
-let flower;
 let mageSelectScreen;
 let smiskiGarden;
 
@@ -86,9 +85,6 @@ function draw() {
     mageSelectScreen.drawSmiskiGarden();
     smis.update();
     smis.drawCharacter();
-    // text(mageSelectScreen.message(), 500, 500);
-    console.log(mageSelectScreen.whichZone(smis.getPos().x, smis.getPos().y));
-    console.log(smis.getPos())
   } else {
     cursor(ARROW);
     background(0);
@@ -110,14 +106,6 @@ function draw() {
 
 function mousePressed() {
   if (titleScreen) titleScreen.mousePressed();
-}
-
-function getFlower() {
-  return flower;
-}
-
-function setFlower(flow) {
-  flower = flow;
 }
 
 
