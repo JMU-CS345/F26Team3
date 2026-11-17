@@ -1,7 +1,8 @@
-class MageSelectionScreen {
+class MageSelectScreen {
 
     constructor(img) {
         this.img = img;
+        this.gardenBoolean = true;
     }
 
     drawSmiskiGarden() {
