@@ -97,7 +97,12 @@ class character {
   }
 
   getPos() {
-    return { x: this.x, y: this.y };
+    return { x: this.pos.x, y: this.pos.y };
+  }
+
+  setPos(x, y) {
+    this.pos.x = x;
+    this.pos.y = y;
   }
 
   setSize(height, width) {
