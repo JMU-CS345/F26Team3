@@ -1,8 +1,14 @@
 class MageSelectScreen {
 
-    constructor(img) {
+    constructor(img, smiski) {
         this.img = img;
         this.gardenBoolean = true;
+        this.smiski = smiski;
+        this.x = 0;
+        this.y = 0;
+        this.flower = 0;
+        this.fChoice = 0;
+
     }
 
     drawSmiskiGarden() {
@@ -11,7 +17,9 @@ class MageSelectScreen {
         textFont('Georgia')
         textAlign(CENTER, CENTER)
         textSize(30)
-        text(message(), 500, 50);
+        text(this.message(), 500, 50);
+        this.finalChoice();
+        this.selectFlower();
     }
 
     // returns an integer based on which zone the smiski is in:None = 0, Mind = 1, Fire = 2
@@ -26,6 +34,7 @@ class MageSelectScreen {
         // Ice box 2 dimensions: (x > 630 && x < 1000 && y > 470 && y < 600)
         // Puddle box 1 dimensions: (x > 328 && x < 676 && y < 346 && y > 247)
         // Puddle box 1 dimensions: (x > 410 && x < 560 && y < 410 && y > 210)
+
 
         // check for mind 
         if ((x > 0 && x < 250 && y < 600 && y > 175) || (x > 0 && x < 90 && y < 600 && y > 80)
@@ -53,7 +62,7 @@ class MageSelectScreen {
 
 
     message() {
-        let zone = this.whichZone();
+        let zone = this.whichZone(this.smiski.getPos().x, this.smiski.getPos().y);
         if (zone === 1) {
             return "Smiski is feeling Philosophical";
         }
@@ -64,7 +73,7 @@ class MageSelectScreen {
             return "Smiksi shakes and shivers";
         }
         else if (zone === 4) {
-            if (getFlower() === 0) {
+            if (this.flower === 0) {
                 return "Press E to select a flower"
             }
             else {
@@ -75,16 +84,26 @@ class MageSelectScreen {
         }
     }
 
+    keyPressed() {
+        if (key === 'e') {
+            return true;
+        }
+    }
+
     selectFlower() {
-        if (keyIsPressed('E')) {
-            setFlower(this.whichZone(x, y));
+        if (this.keyPressed()) {
+            this.fChoice = this.flower;
+            this.flower = (this.whichZone(this.smiski.getPos().x, this.smiski.getPos().y));
+            if (this.flower === 4) {
+                this.flower = 0;
+            }
         }
     }
 
     finalChoice() {
-        if (this.whichZone == 4 && getFlower() > 0 && getFlower() < 4) {
-            if (keyIsPressed('E')) {
-                return 0;
+        if (this.whichZone(this.smiski.getPos().x, this.smiski.getPos().y) == 4 && this.flower > 0 && this.flower < 4) {
+            if (this.keyPressed()) {
+                this.gardenBoolean = false;
             }
         }
     }
