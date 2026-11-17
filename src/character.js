@@ -1,7 +1,7 @@
 class character {
   static #instance = null;
 
-  constructor(startX, startY, speed, imgMap) {
+  constructor(startX, startY, width, height, speed, imgMap) {
     if (character.#instance) {
       return character.#instance;
     }
@@ -11,8 +11,8 @@ class character {
     this.pos = createVector(startX, startY);
     this.speed = speed;
     this.imgMap = imgMap;
-    this.w = 50;
-    this.h = 50;
+    this.w = width;
+    this.h = height;
     this.currentImg = imgMap.front;
   }
 

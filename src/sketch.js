@@ -10,6 +10,7 @@ const canvasWidth = 1000;
 const canvasHeight = 600;
 const dungeonTileSize = 20;
 const characterSize = 50;
+const smisSpeed = 4;
 const dungeonCorridorWidth = Math.ceil(characterSize / dungeonTileSize);
 const dungeonExitCount = 1;
 let titleScreen;
@@ -36,8 +37,8 @@ async function setup() {
   createCanvas(canvasWidth, canvasHeight);
 
   backgroundImage = await loadImg('./src/assets/environment/GrassyPlain.png');
-  dungeonFloorImage = await loadImage('./src/assets/DunegonWallsAndFloors/dungeon-floor.svg');
-  dungeonWallImage = await loadImage('./src/assets/DunegonWallsAndFloors/dungeon-wall.svg');
+  dungeonFloorImage = await loadImg('./src/assets/DunegonWallsAndFloors/dungeon-floor.svg');
+  dungeonWallImage = await loadImg('./src/assets/DunegonWallsAndFloors/dungeon-wall.svg');
 
   dungeon = new RandomDungeon(
     canvasWidth / dungeonTileSize,
@@ -61,9 +62,7 @@ async function setup() {
 
   const startX = showDungeon ? safeStart.x * dungeonTileSize : 200;
   const startY = showDungeon ? safeStart.y * dungeonTileSize : 200;
-  smis = new character(startX, startY, 4, SmisMap);
-  smis.w = characterSize;
-  smis.h = characterSize;
+  smis = new character(startX, startY, characterSize, characterSize, smisSpeed, SmisMap);
 
   fireFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Fire.png');
   iceFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Ice.png');
@@ -97,14 +96,14 @@ function draw() {
 
     if (showDungeon && dungeon && dungeonFloorImage && dungeonWallImage) {
       drawDungeon(dungeon, (tile, x, y, size) => {
-        image(tile === 1 ? dungeonWallImage : dungeonFloorImage, x, y, size, size);
+        drawImg(tile === 1 ? dungeonWallImage : dungeonFloorImage, x, y, size, size);
       }, dungeonTileSize);
+      smis.setDungeon(dungeon, dungeonTileSize);
     } else {
       overWorld.drawOverWorld();
     }
 
     playerHealth.draw();
-    smis.setDungeon(showDungeon ? dungeon : null, dungeonTileSize);
     smis.update();
     smis.drawCharacter();
   }
@@ -113,4 +112,3 @@ function draw() {
 function mousePressed() {
   if (titleScreen) titleScreen.mousePressed();
 }
-
