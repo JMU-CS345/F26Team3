@@ -13,6 +13,8 @@ const characterSize = 50;
 const dungeonCorridorWidth = Math.ceil(characterSize / dungeonTileSize);
 const dungeonExitCount = 1;
 let titleScreen;
+let flower;
+let smiskiGarden
 
 // Native browser image loading: resolves only once the pixels are really there
 function loadImg(path) {
@@ -61,10 +63,12 @@ async function setup() {
   smis = new character(startX, startY, 4, SmisMap);
   smis.w = characterSize;
   smis.h = characterSize;
-  
+
   fireFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Fire.png');
   iceFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Ice.png');
   mindFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Mind.png');
+
+  smiskiGarden = await loadImg('.src/assets/environment/Smiski-Garden.png');
 
   playerHealth = new HealthBar(100, 50, 50, 200, 20);
   overWorld = new OverWorld(backgroundImage);
@@ -98,3 +102,13 @@ function draw() {
 function mousePressed() {
   if (titleScreen) titleScreen.mousePressed();
 }
+
+function getFlower() {
+  return flower;
+}
+
+function setFlower(flow) {
+  flower = flow;
+}
+
+
