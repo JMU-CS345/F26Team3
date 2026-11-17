@@ -69,24 +69,15 @@ describe("character (black box)", function () {
   let savedGlobals;
   let held;   // key codes currently "pressed"
   let draws;  // every sprite draw call: { img, x, y, w, h }
-  let characterSource;
 
-  // character is a singleton, so each test evaluates the file again to get a brand new class
+  // character is a singleton, so build a brand new copy of the class from its own source
+  // (character.js must be loaded by SpecRunner.html; no fetch needed, so this works on file:// and in CI)
   function freshCharacterClass() {
-    return new Function(characterSource + "\n;return character;")();
-  }
-
-  beforeAll(async function () {
-    const tag = Array.from(document.scripts).find(function (s) {
-      return /(^|\/)character[^\/]*\.js/i.test(s.src) && !/test|spec/i.test(s.src);
-    });
-    const url = tag ? tag.src : "character.js";
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error("Could not load " + url + " (HTTP " + response.status + "). Is it in SpecRunner.html?");
+    if (typeof character === "undefined") {
+      throw new Error("The character class is not loaded. Add character.js to SpecRunner.html.");
     }
-    characterSource = await response.text();
-  });
+    return new Function("return (" + character.toString() + ");")();
+  }
 
   beforeEach(function () {
     savedGlobals = {};
