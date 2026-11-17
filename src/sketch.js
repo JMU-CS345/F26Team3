@@ -74,7 +74,7 @@ async function setup() {
   playerHealth = new HealthBar(100, 50, 50, 200, 20);
   overWorld = new OverWorld(backgroundImage);
   titleScreen = new TitleScreen(fireFlower, iceFlower, mindFlower);
-  mageSelectScreen = new MageSelectScreen(smiskiGarden);
+  mageSelectScreen = new MageSelectScreen(smiskiGarden, smis);
 }
 
 function draw() {
