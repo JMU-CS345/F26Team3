@@ -16,7 +16,7 @@ class MageSelectScreen {
 
     // returns an integer based on which zone the smiski is in:None = 0, Mind = 1, Fire = 2
     // Ice = 3,.Puddle = 4;
-    whichZone(x, y) {
+    whichZone() {
         // Mind box 1 dimensions: (x > 0 && x < 250 && y < 600 && y > 175)
         // Mind box 2 dimensions: (x > 0 && x < 90 && y < 600 && y > 80)
         // Mind box 3 dimensions: (x > 0 && x < 400 && y < 600 && y > 450)
@@ -28,6 +28,8 @@ class MageSelectScreen {
         // Puddle box 1 dimensions: (x > 410 && x < 560 && y < 410 && y > 210)
 
         // check for mind 
+        let x =
+            let y = 
         if ((x > 0 && x < 250 && y < 600 && y > 175) || (x > 0 && x < 90 && y < 600 && y > 80)
             || (x > 0 && x < 400 && y < 600 && y > 450)) {
             return 1;
