@@ -74,7 +74,7 @@ class MageSelectScreen {
         }
         else if (zone === 4) {
             if (this.flower === 0) {
-                return "Press E to select a flower"
+                return "Press E to select a flower\nThen come back to the pond"
             }
             else {
                 return "Are you sure you want to select this smiski\nPress E to continue"
