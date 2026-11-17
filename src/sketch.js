@@ -16,7 +16,6 @@ let titleScreen;
 let mageSelectScreen;
 let smiskiGarden;
 let whichSmiski;
-let smiskiType;
 
 // Native browser image loading: resolves only once the pixels are really there
 function loadImg(path) {
@@ -77,7 +76,6 @@ async function setup() {
   titleScreen = new TitleScreen(fireFlower, iceFlower, mindFlower);
   mageSelectScreen = new MageSelectScreen(smiskiGarden, smis);
   whichSmiski = new WhichSmiski();
-  smiskiType = 0;
 }
 
 function draw() {
