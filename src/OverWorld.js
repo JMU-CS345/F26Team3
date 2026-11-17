@@ -22,7 +22,7 @@ class OverWorld {
     textSize(20);
     textFont('Georgia');
     textAlign(CENTER, CENTER);
-    text("You are in the Over World!", 500, 40);
+    text("Welcome to the Over World!", 500, 40);
     pop();
   }
 }
