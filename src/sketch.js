@@ -84,6 +84,8 @@ function draw() {
     titleScreen.drawTitleScreen();
   } else if (mageSelectScreen.gardenBoolean) {
     mageSelectScreen.drawSmiskiGarden();
+    smis.update();
+    smis.drawCharacter();
   } else {
     cursor(ARROW);
     background(0);
