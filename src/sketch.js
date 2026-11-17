@@ -86,6 +86,9 @@ function draw() {
     mageSelectScreen.drawSmiskiGarden();
     smis.update();
     smis.drawCharacter();
+    // text(mageSelectScreen.message(), 500, 500);
+    console.log(mageSelectScreen.whichZone(smis.getPos().x, smis.getPos().y));
+    console.log(smis.getPos())
   } else {
     cursor(ARROW);
     background(0);
