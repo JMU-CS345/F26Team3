@@ -12,6 +12,7 @@ class MageSelectScreen {
     }
 
     drawSmiskiGarden() {
+        push();
         drawImg(this.img, 0, 0, 1000, 600);
         fill(255, 255, 230)
         textFont('Georgia')
@@ -20,6 +21,7 @@ class MageSelectScreen {
         text(this.message(), 500, 50);
         this.finalChoice();
         this.selectFlower();
+        pop();
     }
 
     // returns an integer based on which zone the smiski is in:None = 0, Mind = 1, Fire = 2
