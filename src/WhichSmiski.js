@@ -58,6 +58,7 @@ class WhichSmiski {
     }
 
     drawWhichSmiski() {
+        push();
         if (this.flower === 1) {
             background(194, 150, 201);
             fill(137, 93, 172);
@@ -96,5 +97,6 @@ class WhichSmiski {
             if (this.selectedSmiski && this.isHovering())
                 this.selectedSmiski = false;
         });
+        pop();
     }
 }
