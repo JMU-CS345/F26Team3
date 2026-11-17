@@ -11,7 +11,7 @@ class MageSelectScreen {
         textFont('Georgia')
         textAlign(CENTER, CENTER)
         textSize(30)
-        text(message(), 500, 50);
+        text(this.message(), 500, 50);
     }
 
     // returns an integer based on which zone the smiski is in:None = 0, Mind = 1, Fire = 2
