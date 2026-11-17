@@ -1,10 +1,20 @@
 // Black box tests for the character.
 //
+// These are written from the behavior a player expects, not from how character.js
+// is implemented. They only use the public surface:
 //   new character(x, y, width, height, speed, imgMap)
 //   update()                       - advance one frame using the keys currently held
 //   setDungeon(dungeon, tileSize)  - dungeon.isWall(tileX, tileY) says where walls are
 //   drawCharacter()                - draws the sprite for the way it is facing
 //   pos.x / pos.y                  - top-left corner of the character
+//
+// Assumptions about the spec (change a test if your game should behave differently):
+//   - speed is pixels moved per update() while a key is held
+//   - the character is a width x height box whose top-left corner is pos
+//   - it faces front until it moves, and keeps its last facing when it stops
+//   - it slides along a wall instead of sticking to it
+//   - a collision may leave up to 1px of overlap (TOL), because of fractional diagonal steps
+
 describe("character (black box)", function () {
   const W = 50;
   const H = 50;
@@ -59,7 +69,6 @@ describe("character (black box)", function () {
   let savedGlobals;
   let held;   // key codes currently "pressed"
   let draws;  // every sprite draw call: { img, x, y, w, h }
-  let CharacterClass;
   let characterSource;
 
   // character is a singleton, so each test evaluates the file again to get a brand new class
@@ -96,8 +105,6 @@ describe("character (black box)", function () {
     const record = function (img, x, y, w, h) { draws.push({ img: img, x: x, y: y, w: w, h: h }); };
     globalThis.drawImg = record;
     globalThis.image = record;
-
-    CharacterClass = freshCharacterClass();
   });
 
   afterEach(function () {
@@ -114,7 +121,9 @@ describe("character (black box)", function () {
   // Helpers
   // ---------------------------------------------------------------------------
 
+  // Every call evaluates a fresh copy of the class, so each character is truly independent
   function makeCharacter(x, y, speed) {
+    const CharacterClass = freshCharacterClass();
     return new CharacterClass(x, y, W, H, speed === undefined ? SPEED : speed, imgMap);
   }
 
