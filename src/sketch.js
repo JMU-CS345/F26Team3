@@ -15,6 +15,8 @@ const dungeonExitCount = 1;
 let titleScreen;
 let mageSelectScreen;
 let smiskiGarden;
+let whichSmiski;
+let smiskiType;
 
 // Native browser image loading: resolves only once the pixels are really there
 function loadImg(path) {
@@ -74,6 +76,8 @@ async function setup() {
   overWorld = new OverWorld(backgroundImage);
   titleScreen = new TitleScreen(fireFlower, iceFlower, mindFlower);
   mageSelectScreen = new MageSelectScreen(smiskiGarden, smis);
+  whichSmiski = new WhichSmiski();
+  smiskiType = 0;
 }
 
 function draw() {
@@ -85,6 +89,10 @@ function draw() {
     mageSelectScreen.drawSmiskiGarden();
     smis.update();
     smis.drawCharacter();
+  }
+  else if (whichSmiski.selectedSmiski) {
+    whichSmiski.setFlower(mageSelectScreen.fChoice);
+    whichSmiski.drawWhichSmiski();
   } else {
     cursor(ARROW);
     background(0);

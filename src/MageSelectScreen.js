@@ -7,6 +7,8 @@ class MageSelectScreen {
         this.x = 0;
         this.y = 0;
         this.flower = 0;
+        this.fChoice = 0;
+
     }
 
     drawSmiskiGarden() {
@@ -18,7 +20,6 @@ class MageSelectScreen {
         text(this.message(), 500, 50);
         this.finalChoice();
         this.selectFlower();
-
     }
 
     // returns an integer based on which zone the smiski is in:None = 0, Mind = 1, Fire = 2
@@ -38,16 +39,19 @@ class MageSelectScreen {
         // check for mind 
         if ((x > 0 && x < 250 && y < 600 && y > 175) || (x > 0 && x < 90 && y < 600 && y > 80)
             || (x > 0 && x < 400 && y < 600 && y > 450)) {
+            this.element = 1;
             return 1;
         }
         // check for fire
         else if ((x > 100 && x < 870 && y > 0 && y < 95) ||
             (x > 0 && x < 400 && y < 600 && y > 450)) {
+            this.element = 2;
             return 2;
         }
         // check for ice
         else if ((x > 790 && x < 1000 && y > 120 && y < 600) ||
             (x > 630 && x < 1000 && y > 470 && y < 600)) {
+            this.element = 3;
             return 3;
         }
         // check for puddle
@@ -91,6 +95,7 @@ class MageSelectScreen {
 
     selectFlower() {
         if (this.keyPressed()) {
+            this.fChoice = this.flower;
             this.flower = (this.whichZone(this.smiski.getPos().x, this.smiski.getPos().y));
             if (this.flower === 4) {
                 this.flower = 0;
