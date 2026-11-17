@@ -39,19 +39,16 @@ class MageSelectScreen {
         // check for mind 
         if ((x > 0 && x < 250 && y < 600 && y > 175) || (x > 0 && x < 90 && y < 600 && y > 80)
             || (x > 0 && x < 400 && y < 600 && y > 450)) {
-            this.element = 1;
             return 1;
         }
         // check for fire
         else if ((x > 100 && x < 870 && y > 0 && y < 95) ||
             (x > 0 && x < 400 && y < 600 && y > 450)) {
-            this.element = 2;
             return 2;
         }
         // check for ice
         else if ((x > 790 && x < 1000 && y > 120 && y < 600) ||
             (x > 630 && x < 1000 && y > 470 && y < 600)) {
-            this.element = 3;
             return 3;
         }
         // check for puddle

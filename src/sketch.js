@@ -114,4 +114,3 @@ function mousePressed() {
   if (titleScreen) titleScreen.mousePressed();
 }
 
-
