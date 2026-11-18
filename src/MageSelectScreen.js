@@ -64,13 +64,13 @@ class MageSelectScreen {
     message() {
         let zone = this.whichZone(this.smiski.getPos().x, this.smiski.getPos().y);
         if (zone === 1) {
-            return "Smiski is feeling Philosophical";
+            return "Smiski is feeling Philosophical\n Press E to select";
         }
         else if (zone === 2) {
-            return "Smiski is starting to sweat";
+            return "Smiski is starting to sweat\n Press E to select";
         }
         else if (zone === 3) {
-            return "Smiksi shakes and shivers";
+            return "Smiksi shakes and shivers\n Press E to select";
         }
         else if (zone === 4) {
             if (this.flower === 0) {
