@@ -1,4 +1,4 @@
-# Sprint Review Report: Sprint _
+# Sprint Review Report: Sprint 2
 
 *Copy this file into `scrum/review/` using your team's naming format. Fill in every field. Replace the italic guidance with your team's information. Due by 11:59 p.m. on the day of the review.*
 
@@ -120,6 +120,8 @@ Yes because we are able to select a smiski and move around a randomly generated 
 
 *What happens to each item that is not done? Return it to the backlog and re-estimate it, even if the estimate stays the same. (Sprint 4: write "n/a")*
 
+No incomplete work for this sprint.
+
 | Issue # | What remains | New estimate | Back in backlog? |
 |---------|--------------|--------------|------------------|
 |         |              |              | [ ]              |
@@ -145,7 +147,7 @@ We need to fix the misspelling in the ice Smiski picking section. The stakeholde
 
 **Stories removed:** N/A
 
-**If no change was needed, why not?** We were not given any new priotrities from the stakeholder. We will proceed with what we already have in the backlog, and add one story to the 
+**If no change was needed, why not?** We were not given any new priotrities from the stakeholder. We will proceed with what we already have in the backlog, and add one story to the backlog.
 
 ---
 
