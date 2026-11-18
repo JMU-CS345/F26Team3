@@ -1,4 +1,4 @@
-# Sprint Retrospective Report: Sprint _
+# Sprint Retrospective Report: Sprint 2
 
 *Copy this file into `scrum/retrospective/` using your team's naming format. Fill in every field. Replace the italic guidance with your team's information. Due by 11:59 p.m. on the day of the retrospective.*
 
@@ -79,7 +79,7 @@
 
 **Why?** Sam was on a deadline and was very stressed
 
-**Root cause:** Sam's classes are all stressful and he was not completely focused on small things like spelling. 
+**Root cause:** People were not looking out for spelling issues when checking PRs. 
 
 ---
 
