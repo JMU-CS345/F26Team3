@@ -18,7 +18,7 @@
 
 ## 2. Sprint Goal
 
-A player is able to choose their mage and enter the first dungeon from the overworld. 
+A player is able to choose their mage and enter the first dungeon from the selection screen. 
 
 ---
 
