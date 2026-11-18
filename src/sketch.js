@@ -17,6 +17,8 @@ let titleScreen;
 let mageSelectScreen;
 let smiskiGarden;
 let whichSmiski;
+// variable for checking if smiski has spawned in the dungeon
+let hasSpawned;
 
 // Native browser image loading: resolves only once the pixels are really there
 function loadImg(path) {
@@ -47,7 +49,6 @@ async function setup() {
   dungeon.corridorWidth = dungeonCorridorWidth;
   dungeon.exitCount = dungeonExitCount;
   dungeon.generate();
-  const safeStart = dungeon.getSafeStartPosition();
   smisFront = await loadImg('./src/assets/sprites/SmiskiFront.png');
   smisBack = await loadImg('./src/assets/sprites/SmiskiBack.png');
   smisLeft = await loadImg('./src/assets/sprites/SmiskiLeft.png');
@@ -60,9 +61,7 @@ async function setup() {
     right: smisRight
   };
 
-  const startX = showDungeon ? safeStart.x * dungeonTileSize : 200;
-  const startY = showDungeon ? safeStart.y * dungeonTileSize : 200;
-  smis = new character(startX, startY, characterSize, characterSize, smisSpeed, SmisMap);
+  smis = new character(450, 550, characterSize, characterSize, smisSpeed, SmisMap);
 
   fireFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Fire.png');
   iceFlower = await loadImg('./src/assets/sprites/Smiski-Flower-Ice.png');
@@ -83,6 +82,8 @@ function draw() {
   if (titleScreen.title) {
     titleScreen.drawTitleScreen();
   } else if (mageSelectScreen.gardenBoolean) {
+    // reset smiski spawn params
+    hasSpawned = false;
     mageSelectScreen.drawSmiskiGarden();
     smis.update();
     smis.drawCharacter();
@@ -95,12 +96,21 @@ function draw() {
     background(0);
 
     if (showDungeon && dungeon && dungeonFloorImage && dungeonWallImage) {
+      // updates smiski upon entering the dungeon
+      if (!hasSpawned) {
+        safeStart = dungeon.getSafeStartPosition();
+        smis.setPos(safeStart.x * dungeonTileSize, safeStart.y * dungeonTileSize);
+        smis.setDungeon(dungeon, dungeonTileSize);
+        hasSpawned = true;
+      }
+      // draws dungeon
       drawDungeon(dungeon, (tile, x, y, size) => {
         drawImg(tile === 1 ? dungeonWallImage : dungeonFloorImage, x, y, size, size);
       }, dungeonTileSize);
-      smis.setDungeon(dungeon, dungeonTileSize);
     } else {
       overWorld.drawOverWorld();
+      // reset smiski spawn params
+      hasSpawned = false;
     }
 
     playerHealth.draw();
