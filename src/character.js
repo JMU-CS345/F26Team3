@@ -114,4 +114,21 @@ class character {
   drawCharacter() {
     drawImg(this.currentImg, this.pos.x, this.pos.y, this.w, this.h);
   }
+
+  // True if any part of the character overlaps the outermost ring of dungeon tiles.
+  isTouchingDungeonEdge() {
+    if (!this.dungeon) return false;
+
+    const left = Math.floor(this.pos.x / this.tileSize);
+    const right = Math.floor((this.pos.x + this.w - 1) / this.tileSize);
+    const top = Math.floor(this.pos.y / this.tileSize);
+    const bottom = Math.floor((this.pos.y + this.h - 1) / this.tileSize);
+
+    return (
+      left <= 0 ||
+      top <= 0 ||
+      right >= this.dungeon.width - 1 ||
+      bottom >= this.dungeon.height - 1
+    );
+  }
 }

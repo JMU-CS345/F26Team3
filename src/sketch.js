@@ -107,6 +107,14 @@ function draw() {
       drawDungeon(dungeon, (tile, x, y, size) => {
         drawImg(tile === 1 ? dungeonWallImage : dungeonFloorImage, x, y, size, size);
       }, dungeonTileSize);
+
+      // Leaving through the exit
+      if (smis.isTouchingDungeonEdge()) {
+        showDungeon = false;
+        smis.setDungeon(null, dungeonTileSize); // checkCollision already returns false when dungeon is null
+        smis.setPos(450, 300);                  // wherever you want them to appear in the overworld
+      }
+      
     } else {
       overWorld.drawOverWorld();
       // reset smiski spawn params
