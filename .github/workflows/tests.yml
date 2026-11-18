@@ -15,9 +15,21 @@ jobs:
 
       - name: Run Jasmine specs in headless Chrome
         run: |
+          # Serve the project over http (the smoke tests need fetch and iframes,
+          # which Chrome blocks on file:// pages)
+          python3 -m http.server 8000 >/dev/null 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid 2>/dev/null' EXIT
+
+          # Wait until the server answers
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            curl -s -o /dev/null http://127.0.0.1:8000/SpecRunner.html && break
+            sleep 1
+          done
+
           google-chrome --headless=new --no-sandbox --disable-gpu \
-            --virtual-time-budget=15000 \
-            --dump-dom "file://$PWD/SpecRunner.html" > results.html
+            --virtual-time-budget=60000 \
+            --dump-dom "http://127.0.0.1:8000/SpecRunner.html" > results.html
 
           # Summary line, e.g. "52 specs, 0 failures"
           summary=$(grep -o 'jasmine-overall-result[^>]*>[^<]*' results.html | sed 's/.*>//')
