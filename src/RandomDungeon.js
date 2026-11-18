@@ -124,6 +124,27 @@ class RandomDungeon {
         }
       }
     };
+    const turnWidth = Math.min(
+      this.corridorWidth + 2,
+      this.width,
+      this.height
+    );
+    const carveTurn = (x, y) => {
+      const startX = x - Math.floor((turnWidth - 1) / 2);
+      const startY = y - Math.floor((turnWidth - 1) / 2);
+      for (let offsetY = 0; offsetY < turnWidth; offsetY++) {
+        const turnY = startY + offsetY;
+        if (turnY <= 0 || turnY >= this.height - 1) {
+          continue;
+        }
+        for (let offsetX = 0; offsetX < turnWidth; offsetX++) {
+          const turnX = startX + offsetX;
+          if (turnX > 0 && turnX < this.width - 1) {
+            this.tiles[turnY][turnX] = 0;
+          }
+        }
+      }
+    };
     const roomCenter = (room) => ({
       x: room.x + Math.floor(room.width / 2),
       y: room.y + Math.floor(room.height / 2),
@@ -143,6 +164,12 @@ class RandomDungeon {
           firstCenter.y,
           secondCenter.y
         );
+        if (
+          firstCenter.x !== secondCenter.x &&
+          firstCenter.y !== secondCenter.y
+        ) {
+          carveTurn(secondCenter.x, firstCenter.y);
+        }
       } else {
         carveVerticalCorridor(
           firstCenter.x,
@@ -154,6 +181,12 @@ class RandomDungeon {
           firstCenter.x,
           secondCenter.x
         );
+        if (
+          firstCenter.x !== secondCenter.x &&
+          firstCenter.y !== secondCenter.y
+        ) {
+          carveTurn(firstCenter.x, secondCenter.y);
+        }
       }
     };
 
@@ -393,11 +426,17 @@ class RandomDungeon {
 
       if (exit.y === 0 || exit.y === this.height - 1) {
         carveVerticalCorridor(exit.x, exit.y, inside.y);
+        if (inside.x !== target.x) {
+          carveTurn(inside.x, inside.y);
+        }
       } else {
         carveHorizontalCorridor(exit.y, exit.x, inside.x);
       }
       carveHorizontalCorridor(inside.y, inside.x, target.x);
       carveVerticalCorridor(target.x, inside.y, target.y);
+      if (inside.x !== target.x && inside.y !== target.y) {
+        carveTurn(target.x, inside.y);
+      }
     });
 
     this.safeStart = roomCenter(startRoom);

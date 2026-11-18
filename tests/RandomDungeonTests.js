@@ -72,6 +72,111 @@ describe("RandomDungeon", function() {
     expect(borderFloorCount).toBe(12);
   });
 
+  it("fits a character-sized footprint through narrow corridors and turns", function() {
+    let seed = 1;
+    const random = function() {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      return seed / 4294967296;
+    };
+    const tileSize = 20;
+    const characterSize = 50;
+    const canvasWidth = 1000;
+    const canvasHeight = 600;
+    const dungeon = new RandomDungeon(50, 30, random);
+    dungeon.corridorWidth = 3;
+    dungeon.exitCount = 4;
+    dungeon.generate();
+
+    const positionWidth = canvasWidth - characterSize + 1;
+    const positionHeight = canvasHeight - characterSize + 1;
+    const positionIndex = (x, y) => y * positionWidth + x;
+    const canOccupy = (x, y) => {
+      if (
+        x < 0 ||
+        y < 0 ||
+        x + characterSize > canvasWidth ||
+        y + characterSize > canvasHeight
+      ) {
+        return false;
+      }
+
+      for (
+        let tileY = Math.floor(y / tileSize);
+        tileY <= Math.floor((y + characterSize - 1) / tileSize);
+        tileY++
+      ) {
+        for (
+          let tileX = Math.floor(x / tileSize);
+          tileX <= Math.floor((x + characterSize - 1) / tileSize);
+          tileX++
+        ) {
+          if (dungeon.isWall(tileX, tileY)) {
+            return false;
+          }
+        }
+      }
+      return true;
+    };
+    const safeStart = dungeon.getSafeStartPosition();
+    const startX = safeStart.x * tileSize;
+    const startY = safeStart.y * tileSize;
+    const visited = new Uint8Array(positionWidth * positionHeight);
+    const pending = new Int32Array(visited.length);
+    let pendingIndex = 0;
+    let pendingCount = 0;
+    const startIndex = positionIndex(startX, startY);
+    visited[startIndex] = 1;
+    pending[pendingCount++] = startIndex;
+
+    while (pendingIndex < pendingCount) {
+      const currentIndex = pending[pendingIndex++];
+      const x = currentIndex % positionWidth;
+      const y = Math.floor(currentIndex / positionWidth);
+      [
+        { x: x + 1, y },
+        { x: x - 1, y },
+        { x, y: y + 1 },
+        { x, y: y - 1 },
+      ].forEach(function(next) {
+        const nextIndex = positionIndex(next.x, next.y);
+        if (!visited[nextIndex] && canOccupy(next.x, next.y)) {
+          visited[nextIndex] = 1;
+          pending[pendingCount++] = nextIndex;
+        }
+      });
+    }
+
+    const corridorOffset = -Math.floor((dungeon.corridorWidth - 1) / 2);
+    dungeon.getExitPositions().forEach(function(exit) {
+      const openingStart =
+        (exit.x === 0 || exit.x === dungeon.width - 1 ? exit.y : exit.x) +
+        corridorOffset;
+      const firstPosition = openingStart * tileSize;
+      const lastPosition =
+        (openingStart + dungeon.corridorWidth) * tileSize - characterSize;
+      const isReachable = Array.from(
+        { length: lastPosition - firstPosition + 1 },
+        (_, offset) => firstPosition + offset
+      ).some(function(position) {
+        const x =
+          exit.x === 0
+            ? 0
+            : exit.x === dungeon.width - 1
+              ? canvasWidth - characterSize
+              : position;
+        const y =
+          exit.y === 0
+            ? 0
+            : exit.y === dungeon.height - 1
+              ? canvasHeight - characterSize
+              : position;
+        return visited[positionIndex(x, y)] === 1;
+      });
+
+      expect(isReachable).toBe(true);
+    });
+  });
+
   it("rejects corridor widths that cannot fit inside the dungeon", function() {
     const dungeon = new RandomDungeon(5, 5);
 
