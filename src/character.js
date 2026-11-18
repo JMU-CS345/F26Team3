@@ -1,7 +1,7 @@
 class character {
   static #instance = null;
 
-  constructor(startX, startY, speed, imgMap) {
+  constructor(startX, startY, width, height, speed, imgMap) {
     if (character.#instance) {
       return character.#instance;
     }
@@ -11,8 +11,8 @@ class character {
     this.pos = createVector(startX, startY);
     this.speed = speed;
     this.imgMap = imgMap;
-    this.w = 50;
-    this.h = 50;
+    this.w = width;
+    this.h = height;
     this.currentImg = imgMap.front;
   }
 
@@ -83,17 +83,18 @@ class character {
 
   checkCollision(px, py) {
     if (!this.dungeon) return false;
-    // corners of smiski
-    const corners = [
-      [px, py],
-      [px + this.w - 1, py],
-      [px, py + this.h - 1],
-      [px + this.w - 1, py + this.h - 1],
-    ];
-    // returns true if dungeon.isWall returns true for either position
-    return corners.some(([cx, cy]) =>
-      this.dungeon.isWall(Math.floor(cx / this.tileSize), Math.floor(cy / this.tileSize))
-    );
+
+    const left = Math.floor(px / this.tileSize);
+    const right = Math.floor((px + this.w - 1) / this.tileSize);
+    const top = Math.floor(py / this.tileSize);
+    const bottom = Math.floor((py + this.h - 1) / this.tileSize);
+
+    for (let ty = top; ty <= bottom; ty++) {
+      for (let tx = left; tx <= right; tx++) {
+        if (this.dungeon.isWall(tx, ty)) return true;
+      }
+    }
+    return false;
   }
 
   getPos() {
