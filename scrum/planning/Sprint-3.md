@@ -1,4 +1,4 @@
-# Sprint Planning Report: Sprint _
+# Sprint Planning Report: Sprint 3
 
 *Copy this file into `scrum/planning/` using your team's naming format. Fill in every field. Replace the italic guidance with your team's information.*
 
@@ -6,13 +6,13 @@
 
 ## 1. Meeting Details
 
-**Date:** _
+**Date:** 11/20/26
 
-**Scrum Master:** _
+**Scrum Master:** Anna
 
-**Attendees:** _
+**Attendees:** Anna, Brandon, Sam, Nic
 
-**Absent:** _
+**Absent:** N/A
 
 ---
 
@@ -26,13 +26,13 @@ _
 
 ## 3. Capacity and Velocity
 
-**Sprint dates:** _ to _
+**Sprint dates:** 11/20 to 12/6
 
-**Velocity last sprint (points completed):** _ *(Sprint 1: write "n/a")*
+**Velocity last sprint (points completed):** 14 *(Sprint 1: write "n/a")*
 
-**Average velocity so far:** _
+**Average velocity so far:** 10
 
-**Known absences or reduced availability this sprint:** _
+**Known absences or reduced availability this sprint:** N/A
 
 **Points committed this sprint:** _
 
