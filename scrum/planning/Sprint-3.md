@@ -20,7 +20,7 @@
 
 *One or two sentences describing a playable outcome, not a list of tickets. e.g., "A player can create a character and enter the first dungeon."*
 
-Our goal for this sprint is to have foes to fight in the dungeons, a walking animation and the ability to go into different dungeons through the over world. 
+Our player can explore a lively over world and go into new dungeons with a fully animated and colored smiski. 
 
 ---
 
@@ -54,7 +54,7 @@ Based on the previous sprint where we committed 14 points, we believe that we ca
 |   69      |  As a user, I want my character to have a walking animation, so that my character looks more alive and doesn't just slide around          |    5      |     Nic | [X]    |
 |    70     |   As a user, I want there to be enemy encounters and chest encounters, so that there is something to do when I enter the dungeon         |   5      |    Brandon   | [X]    |
 
-**Total points:** 15
+**Total points:** 17
 
 **Notes:** _
 
@@ -79,6 +79,7 @@ Based on the previous sprint where we committed 14 points, we believe that we ca
 - [ ] Complete walk animation (Issue 68)
 - [ ] Adjust the colors of the image for each element
 - [ ] Make colored assests available for use
+- [ ] Test visually to make sure they look good
 - [ ] Create a pull request
 
 ### Issue #68: Smiski animation sprite sheet
@@ -87,6 +88,7 @@ Based on the previous sprint where we committed 14 points, we believe that we ca
 - [ ] Each row is a sprite sheet for different directions
 - [ ] Make 3 more sprite sheets where every color is a different sprite sheet
 - [ ] Upload Sprite sheets for use
+- [ ] Test to make sure the sprite sheets are equal
 - [ ] Create a pull request
 
 ### Issue #69: Walking animation
